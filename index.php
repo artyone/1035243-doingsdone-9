@@ -72,12 +72,12 @@ $show_complete_tasks = rand(0, 1);
 
                     <label class="checkbox">
                         <!--Добавляем аттрибут "checked" в "Показать выполненные", если переменная $show_complete_tasks равна единице-->
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?php if ($show_complete_tasks == 1): ?> checked <?php endif;?> >
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $show_complete_tasks ? 'checked' : '' ?> >
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
 
-                <table class="tasks" >
+                <table class="tasks">
                     <tr class="tasks__item task">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -93,8 +93,8 @@ $show_complete_tasks = rand(0, 1);
                         <td class="task__date"></td>
                     </tr>
                     <!--Показывает дополнительный тег <tr/> выполненного задания, если переменная $show_complete_tasks равна единице-->
-                    <?php if ($show_complete_tasks == 1) : ?>
-                    <tr class="tasks__item task task--completed">
+                    <?= $show_complete_tasks ? 
+                       '<tr class="tasks__item task task--completed">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden" type="checkbox" checked>
@@ -103,8 +103,8 @@ $show_complete_tasks = rand(0, 1);
                         </td>
                         <td class="task__date">10.10.2019</td>
                         <td class="task__controls"></td>
-                    </tr>
-                    <?php endif; ?>
+                    	</tr>' 
+                    : '' ?>
                 </table>
             </main>
         </div>
