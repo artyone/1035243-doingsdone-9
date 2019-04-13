@@ -1,6 +1,27 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+$menu = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
+$tasks = [
+    'Собеседование в IT компании' => ['task__date' => '01.12.2018',
+                                      'task__controls' => 'Работа',
+                                      'status' => false],
+    'Выполнить тестовое задание' => ['task__date' => '25.12.2018',
+                                     'task__controls' => 'Работа',
+                                     'status' => false],
+    'Сделать задание первого раздела' => ['task__date' => '21.12.2018',
+                                          'task__controls' => 'Учеба',
+                                          'status' => true],
+    'Встреча с другом' => ['task__date' => '22.12.2018',
+                           'task__controls' => 'Входящие',
+                           'status' => false],
+    'Купить корм для кота' => ['task__date' => 'Нет',
+                               'task__controls' => 'Домашние дела',
+                               'status' => false],
+    'Заказать пиццу' => ['task__date' => 'Нет',
+                         'task__controls' => 'Домашние дела',
+                         'status' => false]
+];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -42,10 +63,13 @@ $show_complete_tasks = rand(0, 1);
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
+                    	<!-- Отрисовываем левое меню категорий с помощью цикла -->
+                    	<?php foreach ($menu as $value) : ?>
                         <li class="main-navigation__list-item">
-                            <a class="main-navigation__list-item-link" href="#">Название проекта</a>
+                            <a class="main-navigation__list-item-link" href="#"><?= $value; ?></a>
                             <span class="main-navigation__list-item-count">0</span>
                         </li>
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -105,6 +129,30 @@ $show_complete_tasks = rand(0, 1);
 	                    <td class="task__controls"></td>
                    	</tr>
                     <?php endif; ?>
+                    <!--первый перебор проверят требуется ли выводить завершенные задания, далее двойной перебор массива списка заданий для вывода его в таблицу -->
+                    <?php if (!$show_complete_tasks) {
+					    foreach ($tasks as $key => $value) {
+					        if ($value['status']) {
+					            unset($tasks[$key]);
+					        }
+					    }
+					};
+                    foreach ($tasks as $task => $info) : ?>
+                   	<tr class="tasks__item task <?= $info['status'] ? 'task--completed' : '' ?>">
+                   	    <td class="task__select">
+                            <label class="checkbox task__checkbox">
+	                        	<input class="checkbox__input visually-hidden" type="checkbox" checked>
+	                        	<span class="checkbox__text"><?= $task; ?></span>
+                            </label>
+                        </td>
+                        <?php array_pop($info); //удаляем элемент статуса, так как он нам не нужен на выводе и выводим в нашу таблицу остальные столбцы
+                        foreach ($info as $class => $value) : ?> 
+	                    <td class="<?= $class; ?>"><?= $value; ?></td>
+	                    <?php endforeach; ?>
+	                </tr>
+	                <?php endforeach; ?>
+
+
                 </table>
             </main>
         </div>
