@@ -102,7 +102,7 @@ $tasks = [
                 </div>
 
                 <table class="tasks">
-                    <!-- Удалить после внесения всех правок, пока требуется как шаблон
+                    <!-- Удалить после внесения всех правок, пока требуется как шаблон 
                     <tr class="tasks__item task">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -115,7 +115,7 @@ $tasks = [
                             <a class="download-link" href="#">Home.psd</a>
                         </td>
 
-                        <td class="task__date"></td>
+                        <td class="task__date">01.02.2013</td>
                     </tr> -->
                     <!--Показывает дополнительный тег <tr/> выполненного задания, если переменная $show_complete_tasks равна единице-->
                     <!-- Удалить после внесения всех правок, пока требуется как шаблон
@@ -131,7 +131,8 @@ $tasks = [
 	                    <td class="task__controls"></td>
                    	</tr>
                     <?php endif; ?> -->
-                    <!--первый перебор проверят требуется ли выводить завершенные задания, далее двойной перебор массива списка заданий для вывода его в таблицу -->
+                    <!--1 foreach массива с удалением, если отображение выполненных включено - отображаем все элементы массива, если отключено - выполненные записи удаляем 
+                    2 foreach выводим элементы массива в нашу таблицу заданий-->
                     <?php if (!$show_complete_tasks) {
 					    foreach ($tasks as $key => $value) {
 					        if ($value['status']) {
@@ -147,10 +148,10 @@ $tasks = [
 	                        	<span class="checkbox__text"><?= $task; ?></span>
                             </label>
                         </td>
-                        <?php array_pop($info); //удаляем элемент статуса, так как он нам не нужен на выводе и выводим в нашу таблицу остальные столбцы
-                        foreach ($info as $class => $value) : ?> 
-	                    <td class="<?= $class; ?>"><?= $value; ?></td>
-	                    <?php endforeach; ?>
+                        <td class="task__file">
+                            <a class="download-link" href="#">Home.psd</a>
+                        </td>
+	                	<td class="<?= $class; ?>"><?= $info['task__date']; ?></td>
 	                </tr>
 	                <?php endforeach; ?>
 
