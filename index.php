@@ -102,6 +102,7 @@ $tasks = [
                 </div>
 
                 <table class="tasks">
+                    <!-- Удалить после внесения всех правок, пока требуется как шаблон
                     <tr class="tasks__item task">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -115,8 +116,9 @@ $tasks = [
                         </td>
 
                         <td class="task__date"></td>
-                    </tr>
+                    </tr> -->
                     <!--Показывает дополнительный тег <tr/> выполненного задания, если переменная $show_complete_tasks равна единице-->
+                    <!-- Удалить после внесения всех правок, пока требуется как шаблон
                     <?php if ($show_complete_tasks) : ?>
                     <tr class="tasks__item task task--completed">
                         <td class="task__select">
@@ -128,7 +130,7 @@ $tasks = [
 	                    <td class="task__date">10.10.2019</td>
 	                    <td class="task__controls"></td>
                    	</tr>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
                     <!--первый перебор проверят требуется ли выводить завершенные задания, далее двойной перебор массива списка заданий для вывода его в таблицу -->
                     <?php if (!$show_complete_tasks) {
 					    foreach ($tasks as $key => $value) {
