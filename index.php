@@ -3,24 +3,43 @@
 $show_complete_tasks = rand(0, 1);
 $menu = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
 $tasks = [
-    'Собеседование в IT компании' => ['task__date' => '01.12.2018',
-                                      'task__controls' => 'Работа',
-                                      'status' => false],
-    'Выполнить тестовое задание' => ['task__date' => '25.12.2018',
-                                     'task__controls' => 'Работа',
-                                     'status' => false],
-    'Сделать задание первого раздела' => ['task__date' => '21.12.2018',
-                                          'task__controls' => 'Учеба',
-                                          'status' => true],
-    'Встреча с другом' => ['task__date' => '22.12.2018',
-                           'task__controls' => 'Входящие',
-                           'status' => false],
-    'Купить корм для кота' => ['task__date' => 'Нет',
-                               'task__controls' => 'Домашние дела',
-                               'status' => false],
-    'Заказать пиццу' => ['task__date' => 'Нет',
-                         'task__controls' => 'Домашние дела',
-                         'status' => false]
+	[
+	        'name'=>'Собеседование в IT компании',
+    	    'date' => '01.12.2018',
+            'category' => 'Работа',
+            'status' => false
+    ],
+
+    [
+            'name'=>'Выполнить тестовое задание',
+    		'date' => '25.12.2018',
+            'category' => 'Работа',
+            'status' => false
+    ],
+    [
+            'name'=>'Сделать задание первого раздела',
+            'date' => '21.12.2018',
+            'category' => 'Учеба',
+            'status' => true
+    ],
+    [
+            'name'=>'Встреча с другом',
+            'date' => '22.12.2018',
+            'category' => 'Входящие',
+            'status' => false
+    ],
+    [
+            'name'=>'Купить корм для кота',
+            'date' => 'Нет',
+            'category' => 'Домашние дела',
+            'status' => false
+    ],
+    [
+            'name'=>'Заказать пиццу',
+            'date' => 'Нет',
+            'category' => 'Домашние дела',
+            'status' => false
+    ]
 ];
 ?>
 <!DOCTYPE html>
@@ -131,28 +150,22 @@ $tasks = [
 	                    <td class="task__controls"></td>
                    	</tr>
                     <?php endif; ?> -->
-                    <!--1 foreach массива с удалением, если отображение выполненных включено - отображаем все элементы массива, если отключено - выполненные записи удаляем 
-                    2 foreach выводим элементы массива в нашу таблицу заданий-->
-                    <?php if (!$show_complete_tasks) {
-					    foreach ($tasks as $key => $value) {
-					        if ($value['status']) {
-					            unset($tasks[$key]);
-					        }
-					    }
-					};
-                    foreach ($tasks as $task => $info) : ?>
-                   	<tr class="tasks__item task <?= $info['status'] ? 'task--completed' : '' ?>">
-                   	    <td class="task__select">
-                            <label class="checkbox task__checkbox">
-	                        	<input class="checkbox__input visually-hidden" type="checkbox" checked>
-	                        	<span class="checkbox__text"><?= $task; ?></span>
-                            </label>
-                        </td>
-                        <td class="task__file">
-                            <a class="download-link" href="#">Home.psd</a>
-                        </td>
-	                	<td class="<?= $class; ?>"><?= $info['task__date']; ?></td>
-	                </tr>
+
+                    <?php foreach ($tasks as $key => $value) : ?>
+                        <?php if ($show_complete_tasks || !$value['status']) : ?>
+                        <tr class="tasks__item task <?= $value['status'] ? 'task--completed' : '' ?>">
+                            <td class="task__select">
+                                <label class="checkbox task__checkbox">
+                                    <input class="checkbox__input visually-hidden" type="checkbox" <?= $value['status'] ? 'checked' : '' ?>>
+                                    <span class="checkbox__text"><?= $value['name']; ?></span>
+                                </label>
+                            </td>
+                            <td class="task__file">
+                                <a class="download-link" href="#">Home.psd</a>
+                            </td>
+                            <td class="<?= $class; ?>"><?= $value['date']; ?></td>
+                        </tr>
+                        <?php endif; ?>
 	                <?php endforeach; ?>
 
 
