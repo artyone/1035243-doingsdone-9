@@ -121,7 +121,7 @@ $tasks = [
                 </div>
 
                 <table class="tasks">
-                    <!-- Удалить после внесения всех правок, пока требуется как шаблон 
+                    <!-- Удалить после внесения всех правок, пока требуется как шаблон
                     <tr class="tasks__item task">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -163,12 +163,11 @@ $tasks = [
                             <td class="task__file">
                                 <a class="download-link" href="#">Home.psd</a>
                             </td>
-                            <td class="<?= $class; ?>"><?= $value['date']; ?></td>
+                            <td class="task__date"><?= $value['date']; ?></td>
+                            <td class="task__controls"></td>
                         </tr>
                         <?php endif; ?>
 	                <?php endforeach; ?>
-
-
                 </table>
             </main>
         </div>
