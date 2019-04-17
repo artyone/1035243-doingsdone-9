@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once 'functions/templates.php';
+
 $show_complete_tasks = rand(0, 1);
 $categories = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
 $tasks = [
@@ -45,33 +47,6 @@ $tasks = [
             'status' => false
     ]
 ];
-
-function countCategories($tasks, $name) {
-    $counter = 0;
-    foreach ($tasks as $task) {
-        if ($task['category'] == $name) {
-            $counter ++;
-        }
-    }
-    return $counter;
-};
-
-function include_template($name, array $data = []) {
-    $name = 'templates/' . $name;
-    $result = '';
-
-    if (!is_readable($name)) {
-        return $result;
-    }
-
-    ob_start();
-    extract($data);
-    require $name;
-
-    $result = ob_get_clean();
-
-    return $result;
-}
 
 $page_content = include_template('index.php', ['tasks' => $tasks,'show_complete_tasks'=> $show_complete_tasks]);
 $layout_content = include_template('layout.php',
