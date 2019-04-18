@@ -24,7 +24,8 @@
 
     <?php foreach ($tasks as $task) : ?>
         <?php if ($show_complete_tasks || !$task['status']) : ?>
-            <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : '' ?>">
+            <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : '' ?>
+            <?= verifyTime($task['date'], $task['status']) ? 'task--important' : '' ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox" <?= $task['status'] ? 'checked' : '' ?>>

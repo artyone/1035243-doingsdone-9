@@ -29,4 +29,12 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
+function verifyTime($time, $status) {
+    $time_status = false;
+    if ((strtotime($time) - strtotime(date('D, d M Y H:i:s')) < 86400) && !$status && ($time != 'Нет')) {
+        $time_status = true;
+    }
+    return $time_status;
+}
+
 ?>
