@@ -7,60 +7,56 @@ error_reporting(E_ALL);
 require_once 'functions/templates.php';
 
 $show_complete_tasks = rand(0, 1);
-$categories = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
+$categories = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 $tasks = [
-	[
-	        'name'=>'Собеседование в IT компании',
-    	    'date' => '18.04.2019',
-            'category' => 'Работа',
-            'status' => false
+    [
+        'name' => 'Собеседование в IT компании',
+        'date' => '18.04.2019',
+        'category' => 'Работа',
+        'status' => false
     ],
 
     [
-            'name'=>'Выполнить тестовое задание',
-    		'date' => '20.04.2019',
-            'category' => 'Работа',
-            'status' => false
+        'name' => 'Выполнить тестовое задание',
+        'date' => '20.04.2019',
+        'category' => 'Работа',
+        'status' => false
     ],
     [
-            'name'=>'Сделать задание первого раздела',
-            'date' => '18.04.2019',
-            'category' => 'Учеба',
-            'status' => true
+        'name' => 'Сделать задание первого раздела',
+        'date' => '18.04.2019',
+        'category' => 'Учеба',
+        'status' => true
     ],
     [
-            'name'=>'Встреча с другом',
-            'date' => '19.04.2019',
-            'category' => 'Входящие',
-            'status' => false
+        'name' => 'Встреча с другом',
+        'date' => '19.04.2019',
+        'category' => 'Входящие',
+        'status' => false
     ],
     [
-            'name'=>'Купить корм для кота',
-            'date' => 'Нет',
-            'category' => 'Домашние дела',
-            'status' => false
+        'name' => 'Купить корм для кота',
+        'date' => null,
+        'category' => 'Домашние дела',
+        'status' => false
     ],
     [
-            'name'=>'Заказать пиццу',
-            'date' => 'Нет',
-            'category' => 'Домашние дела',
-            'status' => false
+        'name' => 'Заказать пиццу',
+        'date' => null,
+        'category' => 'Домашние дела',
+        'status' => false
     ]
 ];
 
-$page_content = include_template('index.php', ['tasks' => $tasks,'show_complete_tasks'=> $show_complete_tasks]);
-$layout_content = include_template('layout.php',
+$page_content = includeTemplate('index.php', ['tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks]);
+$layout_content = includeTemplate('layout.php',
     [
-            'page_content' => $page_content,
-            'categories' => $categories,
-            'title' => 'Дела в порядке - Главная',
-            'user_name' => 'Артем Тихонов',
-            'tasks' => $tasks
+        'page_content' => $page_content,
+        'categories' => $categories,
+        'title' => 'Дела в порядке - Главная',
+        'user_name' => 'Артем Тихонов',
+        'tasks' => $tasks
     ]
 );
 
 print($layout_content);
-
-?>
-
-

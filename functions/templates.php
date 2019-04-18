@@ -12,7 +12,7 @@ function countCategories($tasks, $name) {
     return $counter;
 };
 
-function include_template($name, array $data = []) {
+function includeTemplate($name, array $data = []) {
     $name = 'templates/' . $name;
     $result = '';
 
@@ -29,12 +29,24 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
-function verifyTime($time, $status) {
-    $time_status = false;
-    if ((strtotime($time) - strtotime(date('D, d M Y H:i:s')) < 86400) && !$status && ($time != 'Нет')) {
-        $time_status = true;
+/**
+ * Проверяет важна ли задача (до окончания меньше суток)
+ * @param string $date дата выполнения задачи
+ * @param bool $status факт выполнение задачи
+ * @return bool
+ */
+
+function isImportant($date, $status)
+{
+    if ($status) {
+        return false;
     }
-    return $time_status;
+    if (!$date) {
+        return false;
+    }
+    if (strtotime($date) - time() >= 86400) {
+        return false;
+    }
+    return true;
 }
 
-?>
