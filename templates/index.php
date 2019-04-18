@@ -24,7 +24,8 @@
 
     <?php foreach ($tasks as $task) : ?>
         <?php if ($show_complete_tasks || !$task['status']) : ?>
-            <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : '' ?>">
+            <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : '' ?>
+            <?= isImportant($task['date'], $task['status']) ? 'task--important' : '' ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox" <?= $task['status'] ? 'checked' : '' ?>>
@@ -34,7 +35,7 @@
                 <td class="task__file">
                     <a class="download-link" href="#">Home.psd</a>
                 </td>
-                <td class="task__date"><?= htmlspecialchars($task['date']); ?></td>
+                <td class="task__date"><?= $task['date'] ? htmlspecialchars($task['date']) : 'Нет' ?></td>
                 <td class="task__controls"></td>
             </tr>
         <?php endif; ?>
