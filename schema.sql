@@ -20,7 +20,8 @@ CREATE TABLE project (
 	name_project TEXT NOT NULL,
 	id_user TINYINT NOT NULL,
 	PRIMARY KEY (id),
-	INDEX (name_project(255))
+	INDEX (name_project(255)),
+	UNIQUE (name_project(255))
 );
 
 CREATE TABLE user (
