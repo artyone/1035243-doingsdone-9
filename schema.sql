@@ -1,0 +1,35 @@
+CREATE DATABASE doingdone
+CHARACTER SET UTF8
+COLLATE UTF8_GENERAL_CI;
+USE doingdone;
+CREATE TABLE task (
+	id TINYINT(4) NOT NULL AUTO_INCREMENT,
+	date_create DATETIME DEFAULT CURRENT_TIMESTAMP,
+	status_task TINYINT,
+	name_task TEXT NOT NULL,
+	file_link TEXT DEFAULT NULL,
+	expiration_date TIMESTAMP DEFAULT NULL,
+	id_project TINYINT NOT NULL,
+	id_user TINYINT NOT NULL,
+	PRIMARY KEY (id),
+	INDEX (name_task(255))
+	);
+
+CREATE TABLE project (
+	id TINYINT(4) NOT NULL AUTO_INCREMENT,
+	name_project TEXT NOT NULL,
+	id_user TINYINT NOT NULL,
+	PRIMARY KEY (id),
+	INDEX (name_project(255))
+);
+
+CREATE TABLE user (
+	id TINYINT(4) NOT NULL AUTO_INCREMENT,
+	date_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	email TEXT NOT NULL,
+	name_user TEXT NOT NULL,
+	password TEXT NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (email(255)),
+	INDEX (name_user(255), email(255))
+);

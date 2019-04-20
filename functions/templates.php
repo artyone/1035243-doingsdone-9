@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @param string $tasks имя категории из массива
+ * @param string $name имя категории из html
+ * @return int количество совпадений
+ */
 function countCategories($tasks, $name) {
     $counter = 0;
 
