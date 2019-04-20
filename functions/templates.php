@@ -9,7 +9,7 @@ function countCategories($tasks, $name) {
     $counter = 0;
 
     foreach ($tasks as $task) {
-        if ($task['category'] == $name) {
+        if ($task['category'] === $name) {
             $counter ++;
         }
     }
