@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param string $tasks имя категории из массива
+ * @param array $tasks массив с категориями
  * @param string $name имя категории из html
  * @return int количество совпадений
  */
