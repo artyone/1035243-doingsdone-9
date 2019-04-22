@@ -15,7 +15,7 @@
     </nav>
 
     <label class="checkbox">
-        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $show_complete_tasks ? 'checked' : '' ?> >
+        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $showCompleteTasks ? 'checked' : '' ?> >
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
@@ -23,7 +23,7 @@
 <table class="tasks">
 
     <?php foreach ($tasks as $task) : ?>
-        <?php if ($show_complete_tasks || !$task['status']) : ?>
+        <?php if ($showCompleteTasks || !$task['status']) : ?>
             <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : '' ?>
             <?= isImportant($task['date'], $task['status']) ? 'task--important' : '' ?> ">
                 <td class="task__select">

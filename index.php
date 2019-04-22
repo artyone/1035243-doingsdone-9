@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require_once 'functions/templates.php';
 
-$show_complete_tasks = rand(0, 1);
+$showCompleteTasks = rand(0, 1);
 $categories = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 $tasks = [
     [
@@ -48,15 +48,15 @@ $tasks = [
     ]
 ];
 
-$page_content = includeTemplate('index.php', ['tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks]);
-$layout_content = includeTemplate('layout.php',
+$pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
+$layoutContent = includeTemplate('layout.php',
     [
-        'page_content' => $page_content,
+        'pageContent' => $pageContent,
         'categories' => $categories,
         'title' => 'Дела в порядке - Главная',
-        'user_name' => 'Артем Тихонов',
+        'userName' => 'Артем Тихонов',
         'tasks' => $tasks
     ]
 );
 
-print($layout_content);
+print($layoutContent);

@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * @param array $tasks массив с категориями
+ * @param string $name имя категории из html
+ * @return int количество совпадений
+ */
 function countCategories($tasks, $name) {
     $counter = 0;
 
     foreach ($tasks as $task) {
-        if ($task['category'] == $name) {
+        if ($task['category'] === $name) {
             $counter ++;
         }
     }
