@@ -28,8 +28,7 @@ VALUES ('2019-04-20 17:58:59', 'ex@mail.com', 'Артём Ти', 12344),
 SELECT id, project_id, user_id FROM task WHERE user_id = 1;
 
 #Объедините проекты с задачами, чтобы посчитать количество задач в каждом проекте и в дальнейшем выводить эту цифру рядом с именем проекта;
-SELECT t.project_id, p.name, COUNT(*) FROM task t JOIN project p ON t.project_id = p.id GROUP BY t.project_id;
-
+SELECT p.id, p.name, COUNT(t.project_id) AS Количество FROM project p LEFT JOIN task t ON t.project_id = p.id GROUP BY p.id ORDER BY t.project_id ASC;
 
 #получить список из всех задач для одного проекта;
 SELECT id, name FROM task WHERE project_id = 2;
