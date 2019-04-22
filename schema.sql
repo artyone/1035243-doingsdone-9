@@ -20,17 +20,16 @@ CREATE TABLE project
     id      INT          NOT NULL AUTO_INCREMENT,
     name    VARCHAR(500) NOT NULL,
     user_id INT          NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE (name)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE task
 (
     id              INT          NOT NULL AUTO_INCREMENT,
     create_time     DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status          TINYINT,
+    status          TINYINT, DEFAULT 0
     name            VARCHAR(500) NOT NULL,
-    file_link       TEXT     DEFAULT NULL,
+    file_link       VARCHAR(500) DEFAULT NULL,
     expiration_time DATETIME DEFAULT NULL,
     project_id      INT          NOT NULL,
     user_id         INT          NOT NULL,
