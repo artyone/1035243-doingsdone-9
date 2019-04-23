@@ -5,10 +5,13 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once 'functions/templates.php';
+require_once 'functions/db.php';
 
 $showCompleteTasks = rand(0, 1);
-$categories = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
-$tasks = [
+$categories = getCategories(dbConnect(), 1);
+$tasks = getTasks(dbConnect(), 1);
+    /*
+    [
     [
         'name' => 'Собеседование в IT компании',
         'date' => '18.04.2019',
@@ -46,7 +49,7 @@ $tasks = [
         'category' => 'Домашние дела',
         'status' => false
     ]
-];
+];*/
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',

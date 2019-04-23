@@ -32,7 +32,7 @@ CREATE TABLE task
     status          TINYINT DEFAULT 0,
     name            VARCHAR(500) NOT NULL,
     file_link       VARCHAR(500) DEFAULT NULL,
-    expiration_time DATETIME DEFAULT NULL,
+    expiration_time DATE DEFAULT NULL,
     user_id         INT          NOT NULL,
     project_id      INT          NOT NULL,
     PRIMARY KEY (id),

@@ -1,21 +1,17 @@
 <?php
 
-/**
- * @param array $tasks массив с категориями
- * @param string $name имя категории из html
- * @return int количество совпадений
- */
-function countCategories($tasks, $name) {
+/* Не используется. Заменил на запрос в базу данных функцией countProject fuction/db.php
+function countCategories($tasks, $id) {
     $counter = 0;
 
     foreach ($tasks as $task) {
-        if ($task['category'] === $name) {
+        if ($task['project_id'] === $id) {
             $counter ++;
         }
     }
 
     return $counter;
-};
+};*/
 
 function includeTemplate($name, array $data = []) {
     $name = 'templates/' . $name;
