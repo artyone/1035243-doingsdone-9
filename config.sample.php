@@ -10,7 +10,7 @@ return [
         ],
     'dbTest' =>
         [
-            'host' => '',
+            'host' => 'localhost',
             'user' => '',
             'password' => '',
             'database' => ''

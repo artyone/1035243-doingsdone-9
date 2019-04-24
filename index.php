@@ -10,7 +10,7 @@ $config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
 $connection = connection($config['dbWork']);
-$user = getUser($connection, 1);
+$user = getUser($connection, 2);
 $projects = getProjects($connection, $user['id']);
 $tasks = getTasks($connection, $user['id']);
 
