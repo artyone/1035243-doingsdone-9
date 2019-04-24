@@ -9,19 +9,21 @@ require_once 'functions/db.php';
 
 
 $showCompleteTasks = rand(0, 1);
-$user = getUser(dbConnect(), 2);
-$categories = getCategories(dbConnect(), $user['id']);
-$tasks = getTasks(dbConnect(), $user['id']);
+$connectDB = dbConnect('localhost', 'root', '123', 'doingdone_work');
+$user = getUser($connectDB, 1);
+$projects = getProjects($connectDB, $user['id']);
+$tasks = getTasks($connectDB, $user['id']);
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
-        'categories' => $categories,
+        'connectDB' => $connectDB,
+        'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
-        'userName' => $user['name'],
+        'user' => $user,
         'tasks' => $tasks
     ]
 );
 
-print($layoutContent);
+print $layoutContent;

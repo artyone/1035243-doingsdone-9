@@ -1,5 +1,5 @@
 
-USE doingdone;
+USE doingdone_work;
 # добавление данных в  таблицу задач
 # добавление данных в таблицу пользователей
 INSERT INTO user (create_time, email, name, password)
@@ -20,7 +20,7 @@ VALUES ('Входящие', 1),
 
 INSERT INTO task (create_time, status, name, expiration_time, project_id, user_id)
 VALUES ('2019-04-20 18:21:17', 0, 'Собеседование в IT компании', '2019-04-18', '3', '1'),
-       ('2019-04-20 18:21:17', 0, 'Выполнить тестовое задание', '2019-02-20', '8', '2'),
+       ('2019-04-20 18:21:17', 0, 'Выполнить тестовое задание', '2019-02-20', '7', '2'),
        ('2019-04-20 18:21:17', 1, 'Сделать задание первого раздела', '2019-04-27', '2', '1'),
        ('2019-04-19 18:21:17', 0, 'Встреча с другом', '2019-04-19', '1', '1'),
        ('2019-04-20 18:21:17', 0, 'Купить корм для кота', null, '9', '2'),
@@ -30,7 +30,7 @@ VALUES ('2019-04-20 18:21:17', 0, 'Собеседование в IT компан
 SELECT id, project_id, user_id FROM task WHERE user_id = 1;
 
 #Объедините проекты с задачами, чтобы посчитать количество задач в каждом проекте и в дальнейшем выводить эту цифру рядом с именем проекта;
-SELECT p.id, p.name, COUNT(t.project_id) AS Количество FROM project p LEFT JOIN task t ON t.project_id = p.id GROUP BY p.id ORDER BY t.project_id ASC;
+SELECT p.id, p.name, COUNT(t.project_id) AS Count FROM project p LEFT JOIN task t ON t.project_id = p.id GROUP BY p.id ORDER BY t.project_id ASC;
 
 #получить список из всех задач для одного проекта;
 SELECT id, name FROM task WHERE project_id = 2;

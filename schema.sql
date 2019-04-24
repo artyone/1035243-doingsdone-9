@@ -1,8 +1,8 @@
-CREATE DATABASE doingdone
+CREATE DATABASE doingdone_work
     CHARACTER SET UTF8
     COLLATE UTF8_GENERAL_CI;
 
-USE doingdone;
+USE doingdone_work;
 
 CREATE TABLE user
 (
