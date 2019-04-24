@@ -1,9 +1,9 @@
 <?php
 
-
 require_once '../functions/db.php';
 
-$connectDB = dbConnect('localhost', 'root', '123', 'doingdone_test');
+$config = require_once '../config.php';
+$connection = connection($config['dbTest']);
 
 $task = [
     [
@@ -36,7 +36,7 @@ $task = [
 
 
 foreach ($task as $value) {
-    $result = getTasks($connectDB, $value['user_id']);
+    $result = getTasks($connection, $value['user_id']);
     if ($result != $value['expected']) {
         var_dump($result);
         die('Тест не пройден!');

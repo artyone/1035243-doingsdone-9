@@ -1,13 +1,11 @@
 <?php
 
-
-require_once '../functions/templates.php';
 require_once '../functions/db.php';
 
-$connectDB = dbConnect('localhost', 'root', '123', 'doingdone_test');
+$config = require_once '../config.php';
+$connection = connection($config['dbTest']);
 
-$tasks = getTasks($connectDB, 1);
-
+$tasks = getTasks($connection, 1);
 $nameTask = [
     [
         'id' => 1,
@@ -103,7 +101,7 @@ $nameTask = [
 ];
 
 foreach ($nameTask as $value) {
-    $result = countProjects($connectDB, $value['id'], $value['user_id'])['countProjects'];
+    $result = countProjects($connection, $value['id'], $value['user_id'])['countProjects'];
     if ($result != $value['expected']) {
         var_dump($value);
         die('Тест не пройден! Функция вернула: ' . $result);

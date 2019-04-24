@@ -1,23 +1,5 @@
 <?php
 
-// Прощай функция, хоть я и потратил на твою отладку несколько часов.
-///**
-// * Подсчитывает количество задач в каждой категории
-// * @param array $tasks массив всех задач с категориями
-// * @param integer $id id проекта, который будем искать в массиве
-// * @return int результат подсчета
-// */
-//
-//function countProjects($tasks, $id) {
-//    $counter = 0;
-//    foreach ($tasks as $task) {
-//        if ($task['project_id'] == $id && !$task['status']) {
-//            $counter ++;
-//        }
-//    }
-//    return $counter;
-//};
-
 function includeTemplate($name, array $data = []) {
     $name = 'templates/' . $name;
     $result = '';

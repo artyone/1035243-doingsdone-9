@@ -44,7 +44,7 @@
                                 <a class="main-navigation__list-item-link" href="#">
                                     <?= htmlspecialchars($project['name']) ?></a>
                                 <span class="main-navigation__list-item-count">
-                                    <?= countProjects($connectDB, $project['id'], $user['id'])['countProjects'] ?></span>
+                                    <?= countProjects($connection, $project['id'], $user['id'])['countProjects'] ?></span>
                             </li>
                         <?php endforeach; ?>
 

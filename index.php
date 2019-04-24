@@ -6,19 +6,19 @@ error_reporting(E_ALL);
 
 require_once 'functions/templates.php';
 require_once 'functions/db.php';
-
+$config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
-$connectDB = dbConnect('localhost', 'root', '123', 'doingdone_work');
-$user = getUser($connectDB, 1);
-$projects = getProjects($connectDB, $user['id']);
-$tasks = getTasks($connectDB, $user['id']);
+$connection = connection($config['dbWork']);
+$user = getUser($connection, 1);
+$projects = getProjects($connection, $user['id']);
+$tasks = getTasks($connection, $user['id']);
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
-        'connectDB' => $connectDB,
+        'connectDB' => $connection,
         'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
         'user' => $user,

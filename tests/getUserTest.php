@@ -2,7 +2,8 @@
 
 require_once '../functions/db.php';
 
-$connectDB = dbConnect('localhost', 'root', '123', 'doingdone_test');
+$config = require_once '../config.php';
+$connection = connection($config['dbTest']);
 
 $user = [
     [
@@ -25,7 +26,7 @@ $user = [
 
 
 foreach ($user as $value) {
-    $result = getUser($connectDB, $value['id']);
+    $result = getUser($connection, $value['id']);
     if ($result != $value['expected']) {
         var_dump(array_diff($result, $value['expected']));
         die('Тест не пройден!');
