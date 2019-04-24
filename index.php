@@ -18,7 +18,7 @@ $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTask
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
-        'connectDB' => $connection,
+        'connection' => $connection,
         'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
         'user' => $user,

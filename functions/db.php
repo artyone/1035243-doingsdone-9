@@ -21,13 +21,16 @@ function connection($config)
  * Функия получения из БД пользователя по идентификатору
  * @param int|mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
- * @return array|null массив с данными идентификатора, имени и эл. почты
+ * @return array массив с данными идентификатора, имени и эл. почты
  */
-function getUser(mysqli $connection, int $userId) : ?array
+function getUser(mysqli $connection, int $userId) : array
 {
     $sqlQuery = "SELECT id, name, email FROM user WHERE id = " . $userId;
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
     return $result;
 }
 
@@ -35,13 +38,16 @@ function getUser(mysqli $connection, int $userId) : ?array
  * Функция получения категорий для пользователя с отбором по идентификатору
  * @param int|mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
- * @return array|null ассоциативный массив с данными идентификатора и названия проекта
+ * @return array ассоциативный массив с данными идентификатора и названия проекта
  */
 function getProjects(mysqli $connection, int $userId) : array
 {
     $sqlQuery = "SELECT id, name FROM project WHERE user_id = $userId";
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    if (!$result) {
+        return [];
+    }
     return $result;
 }
 
@@ -58,6 +64,9 @@ function getTasks(mysqli $connection, int $userId) : array
        project_id FROM task WHERE user_id = $userId";
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    if (!$result) {
+        return [];
+    }
     return $result;
 }
 
@@ -74,5 +83,8 @@ function countProjects(mysqli $connection, int $projectId, int $userId) : array
     $sqlQuery = "SELECT count(*) as countProjects FROM task WHERE project_id = $projectId && user_id = $userId";
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
     return $result;
 }
