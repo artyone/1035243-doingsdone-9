@@ -41,8 +41,8 @@
 
                         <?php foreach ($categories as $category) : ?>
                             <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($category['name']); ?></a>
-                                <span class="main-navigation__list-item-count"><?= countProject(dbConnect(), $category['id'])['count'] ?></span>
+                                <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($category['name']) ?></a>
+                                <span class="main-navigation__list-item-count"><?= countCategories($tasks, $category['id']) ?></span>
                             </li>
                         <?php endforeach; ?>
 

@@ -1,5 +1,7 @@
 <?php
 
+//вопрос? а надо ли нам каждый раз передавать результат dbConnect() в каждую функцию или можно её задать в коде
+//каждой функции?
 function dbConnect()
 {
     $connect = mysqli_connect('localhost', 'root', '123', 'doingdone');
@@ -29,10 +31,20 @@ function getTasks($dbConnect, $user_id)
     return $result;
 }
 
-function countProject($dbConnect, $id)
+function getUser($dbConnect, $user_id)
 {
-    $sqlQuery = "SELECT count(*) as count FROM task WHERE project_id = " . $id;
+    $sqlQuery = "SELECT id, name FROM user WHERE id = " . $user_id;
     $resource = mysqli_query($dbConnect, $sqlQuery);
     $result = mysqli_fetch_assoc($resource);
     return $result;
 }
+
+/* Подумать о смысле жизни и что лучше обратиться к базе за подсчетом или обработать массив
+
+function countProject($dbConnect, $id)
+{
+    $sqlQuery = "SELECT count(*) as count FROM task WHERE project_id = " . $id  . ' && user_id = 2';
+    $resource = mysqli_query($dbConnect, $sqlQuery);
+    $result = mysqli_fetch_assoc($resource);
+    return $result;
+}*/

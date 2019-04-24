@@ -1,17 +1,21 @@
 <?php
 
-/* Не используется. Заменил на запрос в базу данных функцией countProject fuction/db.php
+
+/**
+ * Подсчитывает количество задач в каждой категории
+ * @param array $tasks массив всех задач с категориями
+ * @param integer $id id проекта, который будем искать в массиве
+ * @return int результат подсчета
+ */
 function countCategories($tasks, $id) {
     $counter = 0;
-
     foreach ($tasks as $task) {
-        if ($task['project_id'] === $id) {
+        if ($task['project_id'] == $id) {
             $counter ++;
         }
     }
-
     return $counter;
-};*/
+};
 
 function includeTemplate($name, array $data = []) {
     $name = 'templates/' . $name;
