@@ -24,7 +24,7 @@
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
-                        <p><?= $userName; ?></p>
+                        <p><?= $user['name']; ?></p>
 
                         <a href="#">Выйти</a>
                     </div>
@@ -39,10 +39,12 @@
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
 
-                        <?php foreach ($categories as $category) : ?>
+                        <?php foreach ($projects as $project) : ?>
                             <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?= htmlspecialchars($category); ?></a>
-                                <span class="main-navigation__list-item-count"><?= countCategories($tasks, $category) ?></span>
+                                <a class="main-navigation__list-item-link" href="#">
+                                    <?= htmlspecialchars($project['name']) ?></a>
+                                <span class="main-navigation__list-item-count">
+                                    <?= $project['task_count'] ?></span>
                             </li>
                         <?php endforeach; ?>
 

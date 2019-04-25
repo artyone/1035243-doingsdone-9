@@ -1,23 +1,14 @@
 <?php
 
+
 /**
- * @param array $tasks массив с категориями
- * @param string $name имя категории из html
- * @return int количество совпадений
+ * Функция для соединения шаблонов html
+ * @param string $name путь к шаблону
+ * @param array $data массив дополнительных параметров
+ * @return string
  */
-function countCategories($tasks, $name) {
-    $counter = 0;
-
-    foreach ($tasks as $task) {
-        if ($task['category'] === $name) {
-            $counter ++;
-        }
-    }
-
-    return $counter;
-};
-
-function includeTemplate($name, array $data = []) {
+function includeTemplate(string $name, array $data = []) : string
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -41,7 +32,7 @@ function includeTemplate($name, array $data = []) {
  * @return bool
  */
 
-function isImportant($date, $status)
+function isImportant(?string $date, bool $status) : bool
 {
     if ($status) {
         return false;

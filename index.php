@@ -5,58 +5,25 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once 'functions/templates.php';
+require_once 'functions/db.php';
+$config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
-$categories = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
-$tasks = [
-    [
-        'name' => 'Собеседование в IT компании',
-        'date' => '18.04.2019',
-        'category' => 'Работа',
-        'status' => false
-    ],
-
-    [
-        'name' => 'Выполнить тестовое задание',
-        'date' => '20.04.2019',
-        'category' => 'Работа',
-        'status' => false
-    ],
-    [
-        'name' => 'Сделать задание первого раздела',
-        'date' => '18.04.2019',
-        'category' => 'Учеба',
-        'status' => true
-    ],
-    [
-        'name' => 'Встреча с другом',
-        'date' => '19.04.2019',
-        'category' => 'Входящие',
-        'status' => false
-    ],
-    [
-        'name' => 'Купить корм для кота',
-        'date' => null,
-        'category' => 'Домашние дела',
-        'status' => false
-    ],
-    [
-        'name' => 'Заказать пиццу',
-        'date' => null,
-        'category' => 'Домашние дела',
-        'status' => false
-    ]
-];
+$connection = connection($config['dbWork']);
+$user = getUser($connection, 2);
+$projects = getProjects($connection, $user['id']);
+$tasks = getTasks($connection, $user['id']);
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
-        'categories' => $categories,
+        'connection' => $connection,
+        'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
-        'userName' => 'Артем Тихонов',
+        'user' => $user,
         'tasks' => $tasks
     ]
 );
 
-print($layoutContent);
+print $layoutContent;

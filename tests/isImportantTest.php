@@ -38,8 +38,8 @@ foreach ($tasks as $task) {
     $result = isImportant($task['date'], $task['status']);
     if ($result !== $task['expected']) {
         var_dump($task);
-        die('Функция вернула: '.$result);
+        die('Тест функции isImportant НЕ пройден! Функция вернула: '.$result);
     }
 }
 
-echo 'Тест функции isImportant пройден'.PHP_EOL;
+echo 'Тест функции isImportant пройден.'.PHP_EOL;
