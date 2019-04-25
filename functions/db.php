@@ -6,7 +6,7 @@
  * @param array $config массив с данными подключениями
  * @return false|mysqli результат выполненения функции mysqli_connect
  */
-function connection($config)
+function connection(array $config) : mysqli
 {
     $connect = mysqli_connect($config['host'], $config['user'], $config['password'], $config['database']);
     if (!$connect) {

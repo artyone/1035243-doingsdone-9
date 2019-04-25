@@ -1,6 +1,14 @@
 <?php
 
-function includeTemplate($name, array $data = []) {
+
+/**
+ * Функция для соединения шаблонов html
+ * @param string $name путь к шаблону
+ * @param array $data массив дополнительных параметров
+ * @return string
+ */
+function includeTemplate(string $name, array $data = []) : string
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -24,7 +32,7 @@ function includeTemplate($name, array $data = []) {
  * @return bool
  */
 
-function isImportant($date, $status)
+function isImportant(string $date, bool $status) : bool
 {
     if ($status) {
         return false;
