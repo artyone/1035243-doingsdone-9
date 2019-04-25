@@ -35,14 +35,15 @@ function getUser(mysqli $connection, int $userId) : array
 }
 
 /**
- * Функция получения категорий для пользователя с отбором по идентификатору
+ * Функция получения названий проектов и количества задач по ним для пользователя
  * @param int|mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
- * @return array ассоциативный массив с данными идентификатора и названия проекта
+ * @return array ассоциативный массив с данными идентификатора, названия проекта и количеством задач по проекту
  */
 function getProjects(mysqli $connection, int $userId) : array
 {
-    $sqlQuery = "SELECT id, name FROM project WHERE user_id = $userId";
+    $sqlQuery = "SELECT p.id, p.name, COUNT(t.project_id) AS task_count FROM project p 
+    LEFT JOIN task t ON t.project_id = p.id WHERE p.user_id = $userId GROUP BY p.id ORDER BY p.id ASC";
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
     if (!$result) {
@@ -71,20 +72,3 @@ function getTasks(mysqli $connection, int $userId) : array
 }
 
 
-/**
- * Функция подсчета количества задач по проекту для пользователя с помощью запроса из БД
- * @param int|mysqli $connection результат выполнения функции подключения к БД
- * @param int $projectId уникальный идентефикатор проекта из таблицы проектов
- * @param int $userId уникатльный идентификатор пользователя
- * @return array|null массив с количеством задач по проекту для пользователя
- */
-function countProjects(mysqli $connection, int $projectId, int $userId) : array
-{
-    $sqlQuery = "SELECT count(*) as countProjects FROM task WHERE project_id = $projectId && user_id = $userId";
-    $resource = mysqli_query($connection, $sqlQuery);
-    $result = mysqli_fetch_assoc($resource);
-    if (!$result) {
-        return [];
-    }
-    return $result;
-}

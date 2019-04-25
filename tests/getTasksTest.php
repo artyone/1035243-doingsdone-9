@@ -2,7 +2,7 @@
 
 require_once '../functions/db.php';
 
-$config = require_once '../config.php';
+$config = require '../config.php';
 $connection = connection($config['dbTest']);
 
 $task = [
@@ -39,8 +39,8 @@ foreach ($task as $value) {
     $result = getTasks($connection, $value['user_id']);
     if ($result != $value['expected']) {
         var_dump($result);
-        die('Тест не пройден!');
+        die('Тест функции getTasks НЕ пройден!');
     }
 }
 
-print 'Тест функции getTasks пройден' . PHP_EOL;
+print 'Тест функции getTasks пройден.' . PHP_EOL;

@@ -2,7 +2,7 @@
 
 require_once '../functions/db.php';
 
-$config = require_once '../config.php';
+$config = require'../config.php';
 $connection = connection($config['dbTest']);
 
 $user = [
@@ -29,8 +29,8 @@ foreach ($user as $value) {
     $result = getUser($connection, $value['id']);
     if ($result != $value['expected']) {
         var_dump(array_diff($result, $value['expected']));
-        die('Тест не пройден!');
+        die('Тест функции getUser НЕ пройден!');
     }
 }
 
-print 'Тест функции getUser пройден' . PHP_EOL;
+print 'Тест функции getUser пройден.' . PHP_EOL;

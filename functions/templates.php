@@ -32,7 +32,7 @@ function includeTemplate(string $name, array $data = []) : string
  * @return bool
  */
 
-function isImportant(string $date, bool $status) : bool
+function isImportant(?string $date, bool $status) : bool
 {
     if ($status) {
         return false;
