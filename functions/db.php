@@ -56,13 +56,14 @@ function getProjects(mysqli $connection, int $userId) : array
  * Функция получения задач для пользователя с отбором по идентификатору
  * @param int|mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
+ * @param int $projectID идентификатор проекта
  * @return array|null ассоциативный массив с данными идентификатора, статуса, имени, адреса файла, даты окончания
  * задачи и идентификатора категории
  */
-function getTasks(mysqli $connection, int $userId) : array
+function getTasks(mysqli $connection, int $userId, int $projectID) : array
 {
     $sqlQuery = "SELECT id, status, name, file_link, DATE_FORMAT(expiration_time, '%d.%m.%Y') as expiration_time, 
-       project_id FROM task WHERE user_id = $userId";
+       project_id FROM task WHERE user_id = $userId " . (($projectID) ? "&& project_id = $projectID" : "");
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
     if (!$result) {
