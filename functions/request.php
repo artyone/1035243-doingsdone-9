@@ -1,19 +1,25 @@
 <?php
 
-function updateGet ($param, $value)
+function getGet()
 {
-    $newGet = $_GET;
-    if (isset($newGet[$param]))
-    {
-        $newGet[$param] = $value;
-    } else {
-        $newGet += [$param => $value];
-    }
-    return '/?' . http_build_query($newGet);
+    return $_GET ?? [];
 }
 
-function unpackGet ($value)
+
+
+function updateGet ($get, $param, $value)
+{
+    if (isset($get[$param]))
+    {
+        $get[$param] = $value;
+    } else {
+        $get += [$param => $value];
+    }
+    return '/?' . http_build_query($get);
+}
+
+function unpackGet ($get, $value)
 {
 
-    return $_GET[$value] ?? 0;
+    return $get[$value] ?? 0;
 }

@@ -10,15 +10,18 @@ require_once 'functions/request.php';
 $config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
+$get = getGet();
 $connection = connection($config['dbWork']);
 $user = getUser($connection, 2);
+privacy($connection, $user['id'], unpackGet($get,'project'));
 $projects = getProjects($connection, $user['id']);
-$tasks = getTasks($connection, $user['id'], unpackGet('project'));
+$tasks = getTasks($connection, $user['id'], unpackGet($get,'project'));
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
+        'get' => $get,
         'connection' => $connection,
         'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
