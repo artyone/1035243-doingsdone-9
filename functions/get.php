@@ -1,25 +1,26 @@
 <?php
 
-function getGet()
+
+function buildProjectUrl($projectId, $showCompleted, $timeRange)
 {
-    return $_GET ?? [];
-}
+    $urlData = [];
 
-
-
-function updateGet ($get, $param, $value)
-{
-    if (isset($get[$param]))
-    {
-        $get[$param] = $value;
-    } else {
-        $get += [$param => $value];
+    if ($projectId) {
+        $urlData['projectId'] = $projectId;
     }
-    return '/?' . http_build_query($get);
+
+    if ($showCompleted) {
+        $urlData['showCompleted'] = $showCompleted;
+    }
+
+    if ($timeRange) {
+        $urlData['timeRange'] = $timeRange;
+    }
+
+    return '/?' . http_build_query($urlData);
 }
 
-function unpackGet ($get, $value)
+function getParam ($array, $key, $default = null)
 {
-
-    return $get[$value] ?? 0;
+    return $array[$key] ?? $default;
 }

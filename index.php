@@ -10,18 +10,26 @@ require_once 'functions/get.php';
 $config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
-$get = getGet();
+
 $connection = connection($config['dbWork']);
 $user = getUser($connection, 2);
-privacy($connection, $user['id'], unpackGet($get,'project'));
+
+$projectId =  getParam($_GET, 'projectId');
+if ($projectId) {
+    $project = getProject($connection, $user['id'], $projectId);
+    if (!$project) {
+        http_response_code(404);
+        die;
+    }
+}
+
 $projects = getProjects($connection, $user['id']);
-$tasks = getTasks($connection, $user['id'], unpackGet($get,'project'));
+$tasks = getTasks($connection, $user['id'], getParam($_GET,'projectId'));
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
 $layoutContent = includeTemplate('layout.php',
     [
         'pageContent' => $pageContent,
-        'get' => $get,
         'connection' => $connection,
         'projects' => $projects,
         'title' => 'Дела в порядке - Главная',
