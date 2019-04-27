@@ -34,19 +34,6 @@ function getUser(mysqli $connection, int $userId) : array
     return $result;
 }
 
-function privacy($connection, $userId, $projectID)
-{
-    $sqlQuery = "SELECT COUNT(*) as count FROM project WHERE user_id = $userId" . (($projectID) ? "&& id = $projectID" : "");
-    $resource = mysqli_query($connection, $sqlQuery);
-    $result = mysqli_fetch_assoc($resource);
-    if ($result['count'] == 0)
-    {
-        http_response_code(404);
-        die;
-    }
-
-
-}
 /**
  * Функция получения названий проектов и количества задач по ним для пользователя
  * @param int|mysqli $connection результат выполнения функции подключения к БД
