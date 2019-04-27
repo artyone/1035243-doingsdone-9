@@ -19,11 +19,11 @@ $tasks = getTasks($connection, $user['id'], getParam($_GET,'projectId'));
 $projectId =  getParam($_GET, 'projectId');
 if ($projectId) {
     $project = getProject($connection, $user['id'], $projectId);
-    $title = $project['name'];
     if (!$project) {
         http_response_code(404);
         die;
     }
+    $title = $project['name'];
 }
 
 $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
