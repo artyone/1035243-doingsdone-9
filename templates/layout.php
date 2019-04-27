@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?></title>
+    <title> Дела в порядке - <?= $title ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
@@ -20,7 +20,7 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus open-modal" href="../add.php">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
@@ -40,8 +40,10 @@
                     <ul class="main-navigation__list">
 
                         <?php foreach ($projects as $project) : ?>
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#">
+                            <li class="main-navigation__list-item
+                            <?= (getParam($_GET,'projectId') === $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
+                                <a class="main-navigation__list-item-link" href="
+                                <?= buildProjectUrl($project['id'], getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange')) ?>">
                                     <?= htmlspecialchars($project['name']) ?></a>
                                 <span class="main-navigation__list-item-count">
                                     <?= $project['task_count'] ?></span>
@@ -71,7 +73,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus" href="pages/form-task.html">Добавить задачу</a>
+        <a class="main-footer__button button button--plus" href="../add.php">Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
