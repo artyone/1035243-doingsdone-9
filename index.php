@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require_once 'functions/templates.php';
 require_once 'functions/db.php';
-require_once 'functions/request.php';
+require_once 'functions/get.php';
 $config = require_once 'config.php';
 
 $showCompleteTasks = rand(0, 1);
