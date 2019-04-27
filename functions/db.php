@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Функция подключения к базе данных
  * @param array $config массив с данными подключениями
@@ -72,9 +71,16 @@ function getTasks(mysqli $connection, int $userId, ?int $projectID) : array
     return $result;
 }
 
-function getProject($connection, $userId, $projectId)
+/**
+ * Функция получения текущего проекта
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $userId уникатльный идентификатор пользователя
+ * @param int $projectId идентификатор проекта
+ * @return array массив с данными идентификатора и названия текущего проекта
+ */
+function getProject(mysqli $connection, int $userId, int $projectId) : array
 {
-    $sqlQuery = "SELECT id, name FROM project WHERE user_id = $userId && id = $projectId";
+    $sqlQuery = "SELECT id, name, user_id FROM project WHERE user_id = $userId && id = $projectId";
     $resource = mysqli_query($connection, $sqlQuery);
     $result = mysqli_fetch_assoc($resource);
     if (!$result) {

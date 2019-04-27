@@ -8,3 +8,6 @@ require_once '../tests/isImportantTest.php';
 require_once '../tests/getUserTest.php';
 require_once '../tests/getProjectsTest.php';
 require_once '../tests/getTasksTest.php';
+require_once '../tests/getProjectTest.php';
+require_once '../tests/getParamTest.php';
+require_once '../tests/buildProjectUrlTest.php';
