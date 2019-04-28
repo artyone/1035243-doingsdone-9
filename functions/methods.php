@@ -37,3 +37,20 @@ function getParam (array $array, string $key, $default = null) : ?string
 {
     return $array[$key] ?? $default;
 }
+
+function uploadFile($file, $dir)
+{
+    $fileName = $file['name'];
+    $count = 0;
+    while (file_exists($dir . '/uploads/' . $fileName)) {
+        $fileName = pathinfo($file['name'], PATHINFO_FILENAME) . $count . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+        $count++;
+    }
+
+    $filePath = $dir . '/uploads/';
+    $fileUrl = '/uploads/' . $fileName;
+    if(!move_uploaded_file($file['tmp_name'], $filePath . $fileName)) {
+        $fileUrl = "";
+    }
+    return $fileUrl;
+}

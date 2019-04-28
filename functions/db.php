@@ -88,3 +88,12 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
     }
     return $result;
 }
+
+function insertTask($connection, $name, $fileLink, $expirationTime, $userId, $projectId)
+{
+    $sqlQuery = "INSERT INTO task (name, file_link, expiration_time, user_id, project_id) 
+        VALUES ('$name'," . ($fileLink ? "'$fileLink'" : "null") . ", " . ($expirationTime ? "'$expirationTime'" : "null") . ", $userId, $projectId)";
+    $resource = mysqli_query($connection, $sqlQuery);
+
+    return $resource;
+}

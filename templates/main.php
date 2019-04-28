@@ -33,7 +33,8 @@
                     </label>
                 </td>
                 <td class="task__file">
-                    <a class="download-link" href="#">Home.psd</a>
+                    <a class=" <?= $task['file_link'] ? 'download-link' : '' ?>" href="<?= $task['file_link'] ?> ">
+                        <?= basename($task['file_link']) ?></a>
                 </td>
                 <td class="task__date"><?= $task['expiration_time'] ? htmlspecialchars($task['expiration_time']) : 'Нет' ?></td>
                 <td class="task__controls"></td>
