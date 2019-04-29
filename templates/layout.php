@@ -41,7 +41,7 @@
 
                         <?php foreach ($projects as $project) : ?>
                             <li class="main-navigation__list-item
-                            <?= (getParam($_GET,'projectId') === $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
+                            <?= (getParam($_GET,'projectId') == $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
                                 <a class="main-navigation__list-item-link" href="
                                 <?= buildProjectUrl($project['id'], getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange')) ?>">
                                     <?= htmlspecialchars($project['name']) ?></a>
