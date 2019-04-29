@@ -49,7 +49,7 @@ function uploadFile($file, $dir)
 
     $fileLink = '/uploads/' . $fileName;
     if(!move_uploaded_file($file['tmp_name'], $dir . $fileName)) {
-        $fileUrl = "";
+        $fileLink = null;
     }
     return $fileLink;
 }

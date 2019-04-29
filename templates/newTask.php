@@ -47,6 +47,4 @@
     <div class="form__row form__row--controls">
         <input class="button" type="submit" name="" value="Добавить">
     </div>
-
 </form>
-

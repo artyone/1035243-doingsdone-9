@@ -158,29 +158,18 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
     return $result;
 }
 
-function insertTask($connection, $name, $fileLink, $expirationTime, $userId, $projectId)
+function insertTask($connection, $taskData)
 {
     $sqlQuery = "INSERT INTO task (name, file_link, expiration_time, user_id, project_id) 
-        VALUES ('$name'," . ($fileLink ? "'$fileLink'" : "null") . ", " . ($expirationTime ? "'$expirationTime'" : "null") . ", $userId, $projectId)";
-    mysqli_query($connection, $sqlQuery);
-    $taskId = mysqli_insert_id($connection);
-    return $taskId;
-}
+        VALUES (?,?,?,?,?)";
 
-/*function insertTask($connection, $name, $fileLink, $expirationTime, $userId, $projectId)
-{
-    $sqlQuery = "INSERT INTO task (name, file_link, expiration_time, user_id, project_id) 
-        VALUES ('?'," . ($fileLink ? "'?'" : "?") . ", " . ($expirationTime ? "'?'" : "?") . ", ?, ?)";
+    if (!$taskData['date']) {
+        $taskData['date'] = null;
+    }
 
-    $array[0] = $name;
-    $array[1] = $fileLink ?? null;
-    $array[2] = $expirationTime ?? null;
-    $array[3] = $userId;
-    $array[4] = $projectId;
-
-    $stmt = db_get_prepare_stmt($connection, $sqlQuery, $array);
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskData['name'], $taskData['fileLink'],
+        $taskData['date'], $taskData['userId'], $taskData['project']]);
     mysqli_stmt_execute($stmt);
-    $resource = mysqli_stmt_get_result($stmt);
-
+    $resource = mysqli_insert_id($connection);
     return $resource;
-}*/
+}

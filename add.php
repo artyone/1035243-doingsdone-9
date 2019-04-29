@@ -9,7 +9,7 @@ $projects = getProjects($connection, $user['id']);
 
 $taskData = [];
 $error = [];
-
+$err = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskData = formDataFilter($_POST);
     $error = validateTaskForm($taskData, $connection, $user);
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$error) {
         $taskData['fileLink'] = uploadFile($_FILES['file'], UPLOAD_DIR);
         $taskData['userId'] = $user ['id'];
-        if (insertTask($connection, $taskData['name'], $taskData['fileLink'], $taskData['date'], $taskData['userId'], $taskData['project'])) {
+        if (insertTask($connection, $taskData)) {
             header('Location: ' . 'index.php');
             die();
         }
