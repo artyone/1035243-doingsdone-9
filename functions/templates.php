@@ -67,9 +67,12 @@ function is_date_valid(string $date) : bool {
     return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
 }
 
-
-
-function formDataFilter($data)
+/**
+ * Функция преобразования символов и удаления пробелов
+ * @param array $data массив данных (из $_POST) требующий преобразований
+ * @return array массив без пробелов в начале и конце строк с преобразованными символами
+ */
+function formDataFilter(array $data) : array
 {
     $resultData = [];
     foreach ($data as $key => $value) {
@@ -79,13 +82,20 @@ function formDataFilter($data)
     return $resultData;
 }
 
-function validateTaskForm($data, $connection, $user)
+/**
+ * Функция проверки заполнения полей из форм страницы добавления задачи
+ * @param array $data массив с данными для проверки
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $user уникальный идентификатор пользователя
+ * @return array возвращает массив с описанием ошибок
+ */
+function validateTaskForm(array $data, mysqli $connection, int $user) : array
 {
     $error = [];
     if (empty($data['name'])) {
         $error['name'] = 'Заполните название задачи';
     }
-    if (!('id' === array_search($data['project'], getProject($connection, $user['id'], $data['project'])))) {
+    if (!('id' === array_search($data['project'], getProject($connection, $user, $data['project'])))) {
         $error['project'] = 'Выберите существующий проект';
     }
     if (!is_date_valid($data['date']) && !empty($data['date'])) {

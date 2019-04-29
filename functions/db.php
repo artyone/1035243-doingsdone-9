@@ -158,7 +158,13 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
     return $result;
 }
 
-function insertTask($connection, $taskData)
+/**
+ * Функция записи данных в массив подготовленным выражением
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $taskData массив данных для записи в таблицу task
+ * @return int|null возвращает идентификатор записаной строки в таблице.
+ */
+function insertTask(mysqli $connection, array $taskData) : ?int
 {
     $sqlQuery = "INSERT INTO task (name, file_link, expiration_time, user_id, project_id) 
         VALUES (?,?,?,?,?)";

@@ -12,7 +12,7 @@ $error = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskData = formDataFilter($_POST);
-    $error = validateTaskForm($taskData, $connection, $user);
+    $error = validateTaskForm($taskData, $connection, $user['id']);
 
     if (!$error) {
         $taskData['fileLink'] = uploadFile($_FILES['file'], UPLOAD_DIR);

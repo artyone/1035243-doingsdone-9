@@ -38,7 +38,13 @@ function getParam (array $array, string $key, $default = null) : ?string
     return $array[$key] ?? $default;
 }
 
-function uploadFile($file, $dir)
+/**
+ * Функция записи файла на сервер и получение ссылки на него
+ * @param array $file массив полученный из $_FILE с данными по загруженному пользователем файлу
+ * @param string $dir директория для загрузки файла на сервере
+ * @return string возвращает ссылку на файл
+ */
+function uploadFile(array $file, string $dir) : string
 {
     $fileName = $file['name'];
     $count = 0;
