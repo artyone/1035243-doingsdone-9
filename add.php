@@ -1,7 +1,7 @@
 <?php
 
 require_once 'bootstrap.php';
-
+const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
 $user = getUser($connection, 2);
 $title = 'Добавление задачи';
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = validateTaskForm($taskData, $connection, $user);
 
     if (!$error) {
-        $taskData['fileLink'] = uploadFile($_FILES['file'], __DIR__);
+        $taskData['fileLink'] = uploadFile($_FILES['file'], UPLOAD_DIR);
         $taskData['userId'] = $user ['id'];
         if (insertTask($connection, $taskData['name'], $taskData['fileLink'], $taskData['date'], $taskData['userId'], $taskData['project'])) {
             header('Location: ' . 'index.php');

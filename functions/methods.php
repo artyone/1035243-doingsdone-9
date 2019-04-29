@@ -42,15 +42,14 @@ function uploadFile($file, $dir)
 {
     $fileName = $file['name'];
     $count = 0;
-    while (file_exists($dir . '/uploads/' . $fileName)) {
+    while (file_exists($dir . $fileName)) {
         $fileName = pathinfo($file['name'], PATHINFO_FILENAME) . $count . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
         $count++;
     }
 
-    $filePath = $dir . '/uploads/';
-    $fileUrl = '/uploads/' . $fileName;
-    if(!move_uploaded_file($file['tmp_name'], $filePath . $fileName)) {
+    $fileLink = '/uploads/' . $fileName;
+    if(!move_uploaded_file($file['tmp_name'], $dir . $fileName)) {
         $fileUrl = "";
     }
-    return $fileUrl;
+    return $fileLink;
 }
