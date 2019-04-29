@@ -9,7 +9,7 @@ $projects = getProjects($connection, $user['id']);
 
 $taskData = [];
 $error = [];
-$err = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $taskData = formDataFilter($_POST);
     $error = validateTaskForm($taskData, $connection, $user);
