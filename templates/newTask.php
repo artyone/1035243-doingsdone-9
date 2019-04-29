@@ -5,7 +5,7 @@
         <label class="form__label" for="name">Название <sup>*</sup></label>
 
         <input class="form__input <?= array_key_exists('name', $error) ? 'form__input--error' : '' ?>
-        " type="text" name="name" id="name" value="<?= empty($post['name']) ? '' : $post['name'] ?>" placeholder="Введите название">
+        " type="text" name="name" id="name" value="<?= empty($taskData['name']) ? '' : $taskData['name'] ?>" placeholder="Введите название">
         <p class="form__message"><?= array_key_exists('name', $error) ? $error['name'] : '' ?></p>
     </div>
 
@@ -15,7 +15,7 @@
         <select class="form__input form__input--select <?= array_key_exists('project', $error) ? 'form__input--error' : '' ?>"
                 name="project" id="project">
             <?php foreach($projects as $project) : ?>
-                <option value="<?= $project['id'] ?>" <?= array_key_exists('project', $post) && $post['project'] == $project['id'] ? 'selected' : ''  ?>>
+                <option value="<?= $project['id'] ?>" <?= array_key_exists('project', $taskData) && $taskData['project'] == $project['id'] ? 'selected' : ''  ?>>
                     <?= $project['name'] ?></option>
             <?php endforeach ?>
         </select>
@@ -26,7 +26,7 @@
         <label class="form__label" for="date">Дата выполнения</label>
 
         <input class="form__input form__input--date <?= array_key_exists('date', $error) ? 'form__input--error' : '' ?>"
-               type="text" name="date" id="date" value="<?= empty($post['date']) ? '' : $post['date'] ?>"
+               type="text" name="date" id="date" value="<?= empty($taskData['date']) ? '' : $taskData['date'] ?>"
                placeholder="Введите дату в формате ГГГГ-ММ-ДД">
         <p class="form__message"><?= array_key_exists('date', $error) ? $error['date'] : '' ?></p>
     </div>

@@ -67,9 +67,32 @@ function is_date_valid(string $date) : bool {
     return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
 }
 
-function inputCheck($data)
+
+
+function formDataFilter($data)
 {
-    $data = trim($data);
-    $data = htmlspecialchars($data);
-    return $data;
+    $resultData = [];
+    foreach ($data as $key => $value) {
+        $resultData[$key] = trim($value);
+        $resultData[$key] = htmlspecialchars($resultData[$key]);
+    }
+    return $resultData;
+}
+
+function validateTaskForm($data, $connection, $user)
+{
+    $error = [];
+    if (empty($data['name'])) {
+        $error['name'] = 'Заполните название задачи';
+    }
+    if (!('id' === array_search($data['project'], getProject($connection, $user['id'], $data['project'])))) {
+        $error['project'] = 'Выберите существующий проект';
+    }
+    if (!is_date_valid($data['date']) && !empty($data['date'])) {
+        $error['date'] = 'Введите корректный формат даты';
+    }
+    if (((strtotime($data['date']) - time() <= -86400)) && !empty($data['date'])){
+        $error['date'] = 'Дата должна быть не раньше текущей';
+    }
+    return $error;
 }
