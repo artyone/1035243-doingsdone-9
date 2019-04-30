@@ -39,23 +39,26 @@ function getParam (array $array, string $key, $default = null) : ?string
 }
 
 /**
- * Функция записи файла на сервер и получение ссылки на него
+ * Функция записи файла на сервер и получение ссылки на него с переименованием и проверкой корректности загрузки
  * @param array $file массив полученный из $_FILE с данными по загруженному пользователем файлу
  * @param string $dir директория для загрузки файла на сервере
  * @return string возвращает ссылку на файл
  */
-function uploadFile(array $file, string $dir) : string
+function uploadFile(array $file, string $dir) : ?string
 {
-    $fileName = $file['name'];
-    $count = 0;
-    while (file_exists($dir . $fileName)) {
-        $fileName = pathinfo($file['name'], PATHINFO_FILENAME) . $count . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
-        $count++;
+
+    if ($file['error'] !== 0 && $file['error'] !== 4) {
+        print 'Ошибка загрузки файла. Код ошибки: ' . $file['error'];
+        die();
     }
 
+    $fileName = validateFileName($file['name'], $dir);
+
     $fileLink = '/uploads/' . $fileName;
+
     if(!move_uploaded_file($file['tmp_name'], $dir . $fileName)) {
         $fileLink = null;
     }
+
     return $fileLink;
 }

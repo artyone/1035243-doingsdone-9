@@ -169,12 +169,12 @@ function insertTask(mysqli $connection, array $taskData) : ?int
     $sqlQuery = "INSERT INTO task (name, file_link, expiration_time, user_id, project_id) 
         VALUES (?,?,?,?,?)";
 
-    if (!$taskData['date']) {
-        $taskData['date'] = null;
+    if (!$taskData['expirationDate']) {
+        $taskData['expirationDate'] = null;
     }
 
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskData['name'], $taskData['fileLink'],
-        $taskData['date'], $taskData['userId'], $taskData['project']]);
+        $taskData['expirationDate'], $taskData['userId'], $taskData['projectId']]);
     mysqli_stmt_execute($stmt);
     $resource = mysqli_insert_id($connection);
     return $resource;

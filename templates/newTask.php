@@ -4,31 +4,31 @@
     <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
 
-        <input class="form__input <?= array_key_exists('name', $error) ? 'form__input--error' : '' ?>
+        <input class="form__input <?= array_key_exists('name', $errors) ? 'form__input--error' : '' ?>
         " type="text" name="name" id="name" value="<?= empty($taskData['name']) ? '' : $taskData['name'] ?>" placeholder="Введите название">
-        <p class="form__message"><?= array_key_exists('name', $error) ? $error['name'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('name', $errors) ? $errors['name'] : '' ?></p>
     </div>
 
     <div class="form__row">
         <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-        <select class="form__input form__input--select <?= array_key_exists('project', $error) ? 'form__input--error' : '' ?>"
-                name="project" id="project">
+        <select class="form__input form__input--select <?= array_key_exists('projectId', $errors) ? 'form__input--error' : '' ?>"
+                name="projectId" id="project">
             <?php foreach($projects as $project) : ?>
-                <option value="<?= $project['id'] ?>" <?= array_key_exists('project', $taskData) && $taskData['project'] == $project['id'] ? 'selected' : ''  ?>>
+                <option value="<?= $project['id'] ?>" <?= array_key_exists('projectId', $taskData) && $taskData['projectId'] == $project['id'] ? 'selected' : ''  ?>>
                     <?= $project['name'] ?></option>
             <?php endforeach ?>
         </select>
-        <p class="form__message"><?= array_key_exists('project', $error) ? $error['project'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('projectId', $errors) ? $errors['projectId'] : '' ?></p>
     </div>
 
     <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
 
-        <input class="form__input form__input--date <?= array_key_exists('date', $error) ? 'form__input--error' : '' ?>"
-               type="text" name="date" id="date" value="<?= empty($taskData['date']) ? '' : $taskData['date'] ?>"
+        <input class="form__input form__input--date <?= array_key_exists('expirationDate', $errors) ? 'form__input--error' : '' ?>"
+               type="text" name="expirationDate" id="date" value="<?= empty($taskData['expirationDate']) ? '' : $taskData['expirationDate'] ?>"
                placeholder="Введите дату в формате ГГГГ-ММ-ДД">
-        <p class="form__message"><?= array_key_exists('date', $error) ? $error['date'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('expirationDate', $errors) ? $errors['expirationDate'] : '' ?></p>
     </div>
 
     <div class="form__row">
@@ -41,7 +41,7 @@
                 <span>Выберите файл</span>
             </label>
         </div>
-        <p class="form__message"><?= array_key_exists('file', $error) ? $error['file'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('file', $errors) ? $errors['file'] : '' ?></p>
     </div>
 
     <div class="form__row form__row--controls">
