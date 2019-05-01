@@ -1,5 +1,5 @@
 <?php
-require_once '../functions/templates.php';
+require '../functions/validators.php';
 
 $tasks = [
     [
