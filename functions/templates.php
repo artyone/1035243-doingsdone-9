@@ -2,10 +2,10 @@
 
 
 /**
- * Функция для соединения шаблонов html
- * @param string $name путь к шаблону
- * @param array $data массив дополнительных параметров
- * @return string
+ * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент. Функция предоставлена академией
+ * @param string $name Путь к файлу шаблона относительно папки templates
+ * @param array $data Ассоциативный массив с данными для шаблона
+ * @return string Итоговый HTML
  */
 function includeTemplate(string $name, array $data = []) : string
 {
@@ -23,26 +23,5 @@ function includeTemplate(string $name, array $data = []) : string
     $result = ob_get_clean();
 
     return $result;
-}
-
-/**
- * Проверяет важна ли задача (до окончания меньше суток)
- * @param string $date дата выполнения задачи
- * @param bool $status факт выполнение задачи
- * @return bool
- */
-
-function isImportant(?string $date, bool $status) : bool
-{
-    if ($status) {
-        return false;
-    }
-    if (!$date) {
-        return false;
-    }
-    if (strtotime($date) - time() >= 86400) {
-        return false;
-    }
-    return true;
 }
 

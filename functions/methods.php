@@ -37,3 +37,30 @@ function getParam (array $array, string $key, $default = null) : ?string
 {
     return $array[$key] ?? $default;
 }
+
+/**
+ * Функция записи файла на сервер и получение ссылки на него с переименованием и проверкой корректности загрузки
+ * @param array $file массив полученный из $_FILE с данными по загруженному пользователем файлу
+ * @param string $dir директория для загрузки файла на сервере
+ * @return string возвращает ссылку на файл
+ */
+function uploadFile(array $file, string $dir) : ?string
+{
+
+    if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        die('Ошибка при загрузке файла. Код ошибки: ' . $file['error']);
+    }
+
+    $fileName = validateFileName($file['name'], $dir);
+
+    $fileLink = '/uploads/' . $fileName;
+
+    if(!move_uploaded_file($file['tmp_name'], $dir . $fileName)) {
+        die('Ошибка записи файла в папку проекта');
+    }
+
+    return $fileLink;
+}
