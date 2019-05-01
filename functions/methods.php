@@ -47,8 +47,11 @@ function getParam (array $array, string $key, $default = null) : ?string
 function uploadFile(array $file, string $dir) : ?string
 {
 
-    if ($file['error'] !== UPLOAD_ERR_OK && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+    if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
         return null;
+    }
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        die('Ошибка при загрузке файла. Код ошибки: ' . $file['error']);
     }
 
     $fileName = validateFileName($file['name'], $dir);
