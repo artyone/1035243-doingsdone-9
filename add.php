@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = validateTaskForm($taskData, $connection, $user['id']);
 
     if (!$errors) {
-        $taskData['fileLink'] = uploadFile($_FILES['file'], UPLOAD_DIR);
-        $taskData['userId'] = $user ['id'];
+        $taskData['file_link'] = uploadFile($_FILES['file'], UPLOAD_DIR);
+        $taskData['user_id'] = $user ['id'];
         if (insertTask($connection, $taskData)) {
             header('Location: ' . 'index.php');
             die();

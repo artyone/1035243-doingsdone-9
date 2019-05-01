@@ -70,11 +70,11 @@ function validateTaskForm(array $taskData, mysqli $connection, int $userId) : ar
     if ($error = validateTaskName($taskData['name'])) {
         $errors['name'] = $error;
     }
-    if ($error = validateTaskProject($connection, $userId, $taskData['projectId'])) {
-        $errors['projectId'] = $error;
+    if ($error = validateTaskProject($connection, $userId, $taskData['project_id'])) {
+        $errors['project_id'] = $error;
     }
-    if ($error = validateTaskDate($taskData['expirationDate'])) {
-        $errors['expirationDate'] = $error;
+    if ($error = validateTaskDate($taskData['expiration_date'])) {
+        $errors['expiration_date'] = $error;
     }
     return $errors;
 }

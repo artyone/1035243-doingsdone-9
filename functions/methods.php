@@ -47,9 +47,8 @@ function getParam (array $array, string $key, $default = null) : ?string
 function uploadFile(array $file, string $dir) : ?string
 {
 
-    if ($file['error'] !== 0 && $file['error'] !== 4) {
-        print 'Ошибка загрузки файла. Код ошибки: ' . $file['error'];
-        die();
+    if ($file['error'] !== UPLOAD_ERR_OK && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+        return null;
     }
 
     $fileName = validateFileName($file['name'], $dir);
@@ -57,7 +56,7 @@ function uploadFile(array $file, string $dir) : ?string
     $fileLink = '/uploads/' . $fileName;
 
     if(!move_uploaded_file($file['tmp_name'], $dir . $fileName)) {
-        $fileLink = null;
+        die('Ошибка записи файла в папку проекта');
     }
 
     return $fileLink;
