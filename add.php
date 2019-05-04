@@ -4,7 +4,7 @@ require_once 'bootstrap.php';
 const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
 $user = getUser($connection, 1);
-$title = 'Добавление задачи';
+$title = 'Дела в порядке - Добавление задачи';
 $projects = getProjects($connection, $user['id']);
 
 $taskData = [];

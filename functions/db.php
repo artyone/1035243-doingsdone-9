@@ -179,3 +179,27 @@ function insertTask(mysqli $connection, array $taskData) : ?int
     $resource = mysqli_insert_id($connection);
     return $resource;
 }
+
+function validateEmail(mysqli $connection, string $email)
+{
+    $sqlQuery = "SELECT id FROM user WHERE email = ?";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$email]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}
+
+function insertUser(mysqli $connection, array $userData) : ?int
+{
+    //$userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
+    $sqlQuery = "INSERT INTO user (email, password, name) VALUES (?,?,?)";
+
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userData['email'], $userData['password'], $userData['name']]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_insert_id($connection);
+    return $resource;
+}

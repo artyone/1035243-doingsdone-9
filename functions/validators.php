@@ -35,7 +35,8 @@ function isImportant(?string $date, bool $status) : bool
  *
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
-function is_date_valid(string $date) : bool {
+function is_date_valid(string $date) : bool
+{
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
@@ -86,7 +87,6 @@ function validateTaskForm(array $taskData, mysqli $connection, int $userId) : ar
  */
 function validateTaskName(string $name) : ?string
 {
-
     if (empty($name)) {
         return 'Заполните имя задачи';
     }
@@ -105,7 +105,6 @@ function validateTaskName(string $name) : ?string
  */
 function validateTaskProject(mysqli $connection, int $userId, int $projectId) : ?string
 {
-
     if (!getProject($connection, $userId, $projectId)) {
         return 'Выберите существующий проект';
     }
@@ -149,4 +148,55 @@ function validateFileName(string $name, string $dir) : string
         $count++;
     }
     return $newName;
+}
+
+function validateUserForm(array $userData, mysqli $connection) : array
+{
+    $errors = [];
+    if ($error = validateUserName($userData['name'])) {
+        $errors['name'] = $error;
+    }
+    if ($error = validateUserEmail($connection, $userData['email'])) {
+        $errors['email'] = $error;
+    }
+    if ($error = validateUserPassword($userData['password'])) {
+        $errors['password'] = $error;
+    }
+    return $errors;
+}
+
+function validateUserName(string $name) : ?string
+{
+    if (empty($name)) {
+        return 'Заполните имя';
+    }
+    if (mb_strlen($name) > 500) {
+        return 'Имя не должно превышать 255 символов';
+    }
+    return null;
+}
+
+function validateUserEmail(mysqli $connection, string $email) : ?string
+{
+    if (empty($email)) {
+        return 'Заполните имя';
+    }
+    if (mb_strlen($email) > 500) {
+        return 'E-mail адрес не должен превышать 255 символов';
+    }
+    if (validateEmail($connection, $email)) {
+        return 'Указанный адрес E-mail занят';
+    }
+    return null;
+}
+
+function validateUserPassword(string $password) : ?string
+{
+    if (empty($password)) {
+        return 'Заполните пароль';
+    }
+    if (mb_strlen($password) > 500) {
+        return 'Пароль не должен превышать 255 символов';
+    }
+    return null;
 }

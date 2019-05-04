@@ -45,6 +45,7 @@
     </div>
 
     <div class="form__row form__row--controls">
+        <?= $errors ? '<p class="error-message">Пожалуйста, исправьте ошибки в форме</p>' : '' ?>
         <input class="button" type="submit" name="" value="Добавить">
     </div>
 </form>
