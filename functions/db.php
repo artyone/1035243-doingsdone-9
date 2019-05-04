@@ -195,7 +195,7 @@ function validateEmail(mysqli $connection, string $email)
 
 function insertUser(mysqli $connection, array $userData) : ?int
 {
-    //$userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
+    $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
     $sqlQuery = "INSERT INTO user (email, password, name) VALUES (?,?,?)";
 
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userData['email'], $userData['password'], $userData['name']]);
