@@ -60,12 +60,12 @@ function formDataFilter(array $data) : array
 
 /**
  * Функция проверки заполнения полей из форм страницы добавления задачи
- * @param array $taskData массив с данными для проверки
  * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $taskData массив с данными для проверки
  * @param int $userId уникальный идентификатор пользователя
  * @return array возвращает массив с описанием ошибок
  */
-function validateTaskForm(array $taskData, mysqli $connection, int $userId) : array
+function validateTaskForm(mysqli $connection, array $taskData, int $userId) : array
 {
     $errors = [];
     if ($error = validateTaskName($taskData['name'])) {
@@ -150,7 +150,13 @@ function validateFileName(string $name, string $dir) : string
     return $newName;
 }
 
-function validateUserForm(array $userData, mysqli $connection) : array
+/**
+ * Функция проверки заполнения полей и корректности их заполнения из форм страницы регистрации пользователя
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $userData массив с данными для проверки
+ * @return array возвращает массив с описанием ошибок
+ */
+function validateUserForm(mysqli $connection, array $userData) : array
 {
     $errors = [];
     if ($error = validateUserName($userData['name'])) {
@@ -165,6 +171,11 @@ function validateUserForm(array $userData, mysqli $connection) : array
     return $errors;
 }
 
+/**
+ * Функция проверки корректности введенного имени на форме
+ * @param string $name имя
+ * @return string|null возврщает текст ошибки
+ */
 function validateUserName(string $name) : ?string
 {
     if (empty($name)) {
@@ -176,6 +187,12 @@ function validateUserName(string $name) : ?string
     return null;
 }
 
+/**
+ * Функция проверки корректности введенной эл. почтына форме
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param string $email эл. почта
+ * @return string|null возврщает текст ошибки
+ */
 function validateUserEmail(mysqli $connection, string $email) : ?string
 {
     if (empty($email)) {
@@ -184,12 +201,20 @@ function validateUserEmail(mysqli $connection, string $email) : ?string
     if (mb_strlen($email) > 500) {
         return 'E-mail адрес не должен превышать 255 символов';
     }
-    if (validateEmail($connection, $email)) {
-        return 'Указанный адрес E-mail занят';
+    if (getUserByEmail($connection, $email)) {
+        return 'Указанный адрес e-mail занят';
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Указан некорректный адрес e-mail';
     }
     return null;
 }
 
+/**
+ * Функция проверки корректности введенного пароля
+ * @param string $password пароль
+ * @return string|null возврщает текст ошибки
+ */
 function validateUserPassword(string $password) : ?string
 {
     if (empty($password)) {

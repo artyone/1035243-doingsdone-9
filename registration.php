@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
-$user = getUser($connection, 1);
+$user = getUserById($connection, 1);
 $title = 'Дела в порядке - Регистрация';
 $projects = getProjects($connection, $user['id']);
 
@@ -12,7 +12,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $userData = formDataFilter($_POST);
-    $errors = validateUserForm($userData, $connection);
+    $errors = validateUserForm($connection, $userData);
 
     if (!$errors) {
         if (insertUser($connection, $userData)) {
