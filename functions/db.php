@@ -215,3 +215,4 @@ function insertUser(mysqli $connection, array $userData) : ?int
     $resource = mysqli_insert_id($connection);
     return $resource;
 }
+

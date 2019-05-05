@@ -196,16 +196,16 @@ function validateUserName(string $name) : ?string
 function validateUserEmail(mysqli $connection, string $email) : ?string
 {
     if (empty($email)) {
-        return 'Заполните имя';
+        return 'Заполните e-mail адрес';
     }
     if (mb_strlen($email) > 500) {
         return 'E-mail адрес не должен превышать 255 символов';
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return 'Указан некорректный адрес e-mail';
+        return 'Указан некорректный e-mail адрес';
     }
     if (getUserByEmail($connection, $email)) {
-        return 'Указанный адрес e-mail занят';
+        return 'Указанный e-mail адрес занят';
     }
     return null;
 }
@@ -224,4 +224,40 @@ function validateUserPassword(string $password) : ?string
         return 'Пароль не должен превышать 255 символов';
     }
     return null;
+}
+
+function validateAuthForm(mysqli $connection, array $authData) : array
+{
+    $errors = [];
+    if ($error = validateUserPassword($authData['password'])) {
+        $errors['password'] = $error;
+    }
+    if ($error = validateAuthEmail($connection, $authData['email'])) {
+        $errors['email'] = $error;
+    }
+    return $errors;
+}
+
+function validateAuthEmail(mysqli $connection, string $email) : ?string
+{
+    if (empty($email)) {
+        return 'Заполните e-mail адрес';
+    }
+    if (mb_strlen($email) > 500) {
+        return 'E-mail адрес не должен превышать 255 символов';
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Указан некорректный e-mail адрес';
+    }
+    return null;
+}
+
+function verifyAuth(mysqli $connection, array $authData) : ?string
+{
+    if ($dbData = getUserByEmail($connection, $authData['email'])) {
+        if (password_verify($authData['password'], $dbData['password'])) {
+            return null;
+        }
+    }
+    return 'E-mail адрес или пароль введены неверно';
 }

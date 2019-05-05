@@ -1,10 +1,8 @@
 <?php
 require_once 'bootstrap.php';
-const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
 $user = getUserById($connection, 1);
 $title = 'Дела в порядке - Регистрация';
-$projects = getProjects($connection, $user['id']);
 
 $userData = [];
 $errors = [];
@@ -16,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         if (insertUser($connection, $userData)) {
+            session_start();
+            $_SESSION = getUserByEmail($connection, $userData['email']);
             header('Location: ' . 'index.php');
             die();
         }
