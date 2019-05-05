@@ -201,11 +201,11 @@ function validateUserEmail(mysqli $connection, string $email) : ?string
     if (mb_strlen($email) > 500) {
         return 'E-mail адрес не должен превышать 255 символов';
     }
-    if (getUserByEmail($connection, $email)) {
-        return 'Указанный адрес e-mail занят';
-    }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return 'Указан некорректный адрес e-mail';
+    }
+    if (getUserByEmail($connection, $email)) {
+        return 'Указанный адрес e-mail занят';
     }
     return null;
 }
