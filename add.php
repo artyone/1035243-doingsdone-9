@@ -3,8 +3,8 @@
 require_once 'bootstrap.php';
 const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
-$user = getUser($connection, 1);
-$title = 'Добавление задачи';
+$user = getUserById($connection, 1);
+$title = 'Дела в порядке - Добавление задачи';
 $projects = getProjects($connection, $user['id']);
 
 $taskData = [];
@@ -13,7 +13,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $taskData = formDataFilter($_POST);
-    $errors = validateTaskForm($taskData, $connection, $user['id']);
+    $errors = validateTaskForm($connection, $taskData, $user['id']);
 
     if (!$errors) {
         $taskData['file_link'] = uploadFile($_FILES['file'], UPLOAD_DIR);

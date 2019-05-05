@@ -4,7 +4,7 @@ require_once 'bootstrap.php';
 
 $showCompleteTasks = rand(0, 1);
 $connection = connection($config['dbWork']);
-$user = getUser($connection, 1);
+$user = getUserById($connection, 1);
 $title = 'Все проекты';
 $projects = getProjects($connection, $user['id']);
 $tasks = getTasks($connection, $user['id'], getParam($_GET,'projectId'));

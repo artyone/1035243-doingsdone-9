@@ -26,7 +26,7 @@ $user = [
 
 
 foreach ($user as $value) {
-    $result = getUser($connection, $value['id']);
+    $result = getUserById($connection, $value['id']);
     if ($result != $value['expected']) {
         //var_dump($value);
         var_dump(array_diff($result, $value['expected']));

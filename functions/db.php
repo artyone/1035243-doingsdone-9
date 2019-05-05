@@ -17,7 +17,7 @@ function connection(array $config) : mysqli
 }
 
 /**
- * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных из академии
  *
  * @param $link mysqli Ресурс соединения
  * @param $sql string SQL запрос с плейсхолдерами вместо значений
@@ -77,7 +77,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  * @return array массив с данными идентификатора, имени и эл. почты
  */
 
-function getUser(mysqli $connection, int $userId) : array
+function getUserById(mysqli $connection, int $userId) : array
 {
     $sqlQuery = "SELECT id, name, email FROM user WHERE id = ?";
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userId]);
@@ -159,7 +159,7 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
 }
 
 /**
- * Функция записи данных в массив подготовленным выражением
+ * Функция записи данных по задаче в базу данных подготовленным выражением
  * @param mysqli $connection результат выполнения функции подключения к БД
  * @param array $taskData массив данных для записи в таблицу task
  * @return int|null возвращает идентификатор записаной строки в таблице.
@@ -175,6 +175,42 @@ function insertTask(mysqli $connection, array $taskData) : ?int
 
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskData['name'], $taskData['file_link'],
         $taskData['expiration_date'], $taskData['user_id'], $taskData['project_id']]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_insert_id($connection);
+    return $resource;
+}
+
+/**
+ * Функция получения пользователя из базы данных по эл. почте
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param string $email эл. почта
+ * @return array возвращает массив с данными по пользователю, если нашлось совпадение по эл. почте
+ */
+function getUserByEmail(mysqli $connection, string $email) : array
+{
+    $sqlQuery = "SELECT id, email, password, name FROM user WHERE email = ?";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$email]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}
+
+/**
+ * Функция записи данных по пользователю в базу данных подготовленным выражением
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $userData массив данных для записи в таблицу user
+ * @return int|null возвращает идентификатор записаной строки в таблице
+ */
+function insertUser(mysqli $connection, array $userData) : ?int
+{
+    $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
+    $sqlQuery = "INSERT INTO user (email, password, name) VALUES (?,?,?)";
+
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userData['email'], $userData['password'], $userData['name']]);
     mysqli_stmt_execute($stmt);
     $resource = mysqli_insert_id($connection);
     return $resource;
