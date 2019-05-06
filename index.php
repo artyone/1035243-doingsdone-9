@@ -4,7 +4,6 @@ require_once 'bootstrap.php';
 
 $showCompleteTasks = rand(0, 1);
 $connection = connection($config['dbWork']);
-$user = getUserById($connection, 1);
 session_start();
 
 if (getParam($_GET, 'user') == 'exit') {
