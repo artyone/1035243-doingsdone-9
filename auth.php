@@ -6,6 +6,12 @@ $title = 'Дела в порядке - Вход на сайт';
 $authData = [];
 $errors = [];
 
+$user = getUserFromSession();
+if ($user) {
+    header('Location: ' . 'index.php');
+    die();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $authData = formDataFilter($_POST);
@@ -13,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         if (!$errors['error'] = login($connection, $authData)) {
-            $_SESSION = getUserByEmail($connection, $authData['email']);
+            $_SESSION['user'] = getUserByEmail($connection, $authData['email']);
             header('Location: ' . 'index.php');
             die();
         }

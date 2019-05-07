@@ -14,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         if (insertUser($connection, $userData)) {
-            session_start();
-            $_SESSION = getUserByEmail($connection, $userData['email']);
+            $_SESSION['user'] = getUserByEmail($connection, $userData['email']);
             header('Location: ' . 'index.php');
             die();
         }

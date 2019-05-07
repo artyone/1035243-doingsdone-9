@@ -12,7 +12,16 @@ function login(mysqli $connection, array $authData) : ?string
 
 function logout()
 {
-    $_SESSION = [];
+    $_SESSION['user'] = [];
     header('Location: ' . 'index.php');
     die();
+}
+
+function getUserFromSession()
+{
+    if ($_SESSION['user']) {
+        return $_SESSION['user'];
+    } else {
+        return [];
+    }
 }
