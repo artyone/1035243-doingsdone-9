@@ -9,11 +9,10 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $authData = formDataFilter($_POST);
-    $errors = validateAuthForm($connection, $authData);
+    $errors = validateAuthForm($authData);
 
     if (!$errors) {
-        if (!$errors['error'] = verifyAuth($connection, $authData)) {
-            session_start();
+        if (!$errors['error'] = login($connection, $authData)) {
             $_SESSION = getUserByEmail($connection, $authData['email']);
             header('Location: ' . 'index.php');
             die();

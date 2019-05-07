@@ -25,9 +25,3 @@ function includeTemplate(string $name, array $data = []) : string
     return $result;
 }
 
-function exitSession ()
-{
-    $_SESSION = [];
-    header('Location: ' . 'index.php');
-    die();
-}

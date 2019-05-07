@@ -26,7 +26,7 @@
                     <div class="user-menu__data">
                         <p><?= $user['name']; ?></p>
 
-                        <a href="index.php?user=exit">Выйти</a>
+                        <a href="../logout.php">Выйти</a>
                     </div>
                 </div>
             </div>
