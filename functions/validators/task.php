@@ -31,7 +31,7 @@ function validateTaskName(string $name) : ?string
     if (empty($name)) {
         return 'Заполните имя задачи';
     }
-    if (mb_strlen($name) > 500) {
+    if (mb_strlen($name) > 255) {
         return 'Имя задачи не должно превышать 255 символов';
     }
     return null;
@@ -44,8 +44,11 @@ function validateTaskName(string $name) : ?string
  * @param int $projectId идентификатор проекта
  * @return string|null возвращает текст ошибки
  */
-function validateTaskProject(mysqli $connection, int $userId, int $projectId) : ?string
+function validateTaskProject(mysqli $connection, int $userId, ?int $projectId) : ?string
 {
+    if (!$projectId) {
+        return 'Заполните поле проекта';
+    }
     if (!getProject($connection, $userId, $projectId)) {
         return 'Выберите существующий проект';
     }

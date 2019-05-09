@@ -1,5 +1,4 @@
 <?php
-require '../functions/validators.php';
 
 $tasks = [
     [

@@ -30,7 +30,7 @@ function validateUserName(string $name) : ?string
     if (empty($name)) {
         return 'Заполните имя';
     }
-    if (mb_strlen($name) > 500) {
+    if (mb_strlen($name) > 255) {
         return 'Имя не должно превышать 255 символов';
     }
     return null;
@@ -47,7 +47,7 @@ function validateUserEmail(mysqli $connection, string $email) : ?string
     if (empty($email)) {
         return 'Заполните e-mail адрес';
     }
-    if (mb_strlen($email) > 500) {
+    if (mb_strlen($email) > 255) {
         return 'E-mail адрес не должен превышать 255 символов';
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -69,7 +69,7 @@ function validateUserPassword(string $password) : ?string
     if (empty($password)) {
         return 'Заполните пароль';
     }
-    if (mb_strlen($password) > 500) {
+    if (mb_strlen($password) > 255) {
         return 'Пароль не должен превышать 255 символов';
     }
     return null;

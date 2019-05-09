@@ -1,8 +1,13 @@
 <?php
 require_once 'bootstrap.php';
 $connection = connection($config['dbWork']);
-$user = getUserById($connection, 1);
 $title = 'Дела в порядке - Регистрация';
+
+$user = getUserFromSession();
+if ($user) {
+    header('Location: ' . 'index.php');
+    die();
+}
 
 $userData = [];
 $errors = [];

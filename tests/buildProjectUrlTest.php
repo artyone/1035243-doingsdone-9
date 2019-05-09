@@ -1,7 +1,5 @@
 <?php
 
-require_once '../functions/methods.php';
-
 $urlData = [
     [
         'projectId' => 1,
