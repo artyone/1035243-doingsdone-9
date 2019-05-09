@@ -22,8 +22,8 @@ foreach ($user as $value) {
     $result = getUserByEmail($connection, $value['email']);
     if ($result != $value['expected']) {
         var_dump(array_diff($result, $value['expected']));
-        die('Тест функции getUser НЕ пройден!');
+        die('Тест функции getByEmail НЕ пройден!');
     }
 }
 
-print 'Тест функции getUser пройден.' . PHP_EOL;
+print 'Тест функции getByEmail пройден.' . PHP_EOL;

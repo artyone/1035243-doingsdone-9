@@ -9,7 +9,7 @@ require_once './bootstrapTest.php';
 require_once './db/getProjectTest.php';
 require_once './db/getProjectsTest.php';
 require_once './db/getTasksTest.php';
-require_once './db/getUserByIdTest.php';
+require_once './db/getUserByEmailTest.php';
 
 require_once './validators/formDataFilterTest.php';
 require_once './validators/isImportantTest.php';
