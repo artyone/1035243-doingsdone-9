@@ -1,7 +1,5 @@
 <?php
 
-require_once '../functions/methods.php';
-
 $param = [
     [
         'array' => ['projectId' => 1, 'showCompleted' => 1, 'timeRange'=> 'today'],

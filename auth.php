@@ -1,7 +1,10 @@
 <?php
 require_once 'bootstrap.php';
 $connection = connection($config['dbWork']);
-$title = 'Дела в порядке - Регистрация';
+$title = 'Дела в порядке - Вход на сайт';
+
+$authData = [];
+$errors = [];
 
 $user = getUserFromSession();
 if ($user) {
@@ -9,24 +12,21 @@ if ($user) {
     die();
 }
 
-$userData = [];
-$errors = [];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $userData = formDataFilter($_POST);
-    $errors = validateUserForm($connection, $userData);
+    $authData = formDataFilter($_POST);
+    $errors = validateAuthForm($authData);
 
     if (!$errors) {
-        if (insertUser($connection, $userData)) {
-            $_SESSION['user'] = getUserByEmail($connection, $userData['email']);
+        if (!$errors['error'] = login($connection, $authData)) {
+            $_SESSION['user'] = getUserByEmail($connection, $authData['email']);
             header('Location: ' . 'index.php');
             die();
         }
     }
 }
 
-$pageContent = includeTemplate('register.php', ['userData' => $userData, 'errors' => $errors]);
+$pageContent = includeTemplate('authUser.php', ['authData' => $authData, 'errors' => $errors]);
 $layoutContent = includeTemplate('unauth.php',
     [
         'pageContent' => $pageContent,

@@ -3,7 +3,13 @@
 require_once 'bootstrap.php';
 const UPLOAD_DIR = __DIR__ . '/uploads/';
 $connection = connection($config['dbWork']);
-$user = getUserById($connection, 1);
+
+$user = getUserFromSession();
+if (!$user) {
+    header('Location: ' . 'auth.php');
+    die();
+}
+
 $title = 'Дела в порядке - Добавление задачи';
 $projects = getProjects($connection, $user['id']);
 
