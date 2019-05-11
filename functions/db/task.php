@@ -16,7 +16,7 @@ function getTasks(mysqli $connection, int $userId, ?int $projectId, ?int $showCo
     $criteria = buildCriteria($userId, $projectId, $showCompleted, $timeRange);
     $sqlQuery = addCriteriaToQuery($sqlQuery, $criteria);
 
-    $array = buildArrayForPrepareStmt($userId, $projectId, $showCompleted, $timeRange);
+    $array = buildArrayForPrepareStmt($criteria);
 
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, $array);
     mysqli_stmt_execute($stmt);

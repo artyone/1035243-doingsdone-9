@@ -1,6 +1,9 @@
 <?php
 
 require_once 'bootstrap.php';
+const RANGE_TOMORROW = 'tomorrow';
+const RANGE_TODAY = 'today';
+const RANGE_EXPIRED = 'expired';
 
 $showCompleteTasks = getParam($_GET, 'showCompleted');
 $connection = connection($config['dbWork']);

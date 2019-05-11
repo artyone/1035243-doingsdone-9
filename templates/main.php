@@ -10,12 +10,12 @@
     <nav class="tasks-switch">
         <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), null) ?>"
            class="tasks-switch__item <?= (!getParam($_GET, 'timeRange')) ? 'tasks-switch__item--active' : '' ?> ">Все задачи</a>
-        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'today') ?>"
-           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'today') ? 'tasks-switch__item--active' : '' ?>">Повестка дня</a>
-        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'tommorrow') ?>"
-           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'tommorrow') ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
-        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'expired') ?>"
-           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'expired') ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), RANGE_TODAY) ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == RANGE_TODAY) ? 'tasks-switch__item--active' : '' ?>">Повестка дня</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), RANGE_TOMORROW) ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == RANGE_TOMORROW) ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), RANGE_EXPIRED) ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == RANGE_EXPIRED) ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">

@@ -32,44 +32,43 @@ function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?strin
         $criteria[] = [
             'field' => 'user_id',
             'sign' => ' = ',
-            'value' => '?'
+            'value' => $userId
         ];
     }
     if ($projectId) {
         $criteria[] = [
             'field' => 'project_id',
             'sign' => ' = ',
-            'value' => '?'
+            'value' => $projectId
         ];
     }
     if ($showCompleted === 0) {
         $criteria[] = [
             'field' => 'status',
             'sign' => ' = ',
-            'value' => '?'
+            'value' => $showCompleted
         ];
-
     }
     switch ($timeRange) {
-        case 'today' :
+        case RANGE_TODAY :
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' = ',
-                'value' => '?'
+                'value' => $timeRange
             ];
             break;
-        case 'tommorrow' :
+        case RANGE_TOMORROW :
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' = ',
-                'value' => '?'
+                'value' => $timeRange
             ];
             break;
-        case 'expired' :
+        case RANGE_EXPIRED :
             $criteria[] = [
                 'field' => 'expiration_time',
-                'sign' => '<',
-                'value' => '?'
+                'sign' => ' < ',
+                'value' => $timeRange
             ];
             break;
     }
@@ -78,40 +77,19 @@ function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?strin
 
 function addCriteriaToQuery(string $sqlQuery, array $criteria)
 {
-    $result = $sqlQuery . " WHERE ";
-    $count = count($criteria);
-    foreach ($criteria as $value) {
-        $result = $result . $value['field'] . $value['sign'] . $value['value'];
-        $count --;
-        if ($count) {
-            $result .= " && ";
-        }
+    $result = [];
+    foreach ($criteria as $expression) {
+        $result[] = $expression['field'] . $expression['sign'] . ' ?' ;
     }
-    return $result;
+    return $sqlQuery . ' WHERE ' . implode(' && ', $result);
 }
 
-function buildArrayForPrepareStmt(int $userId, ?int $projectId, ?int $showCompleted, ?string $timeRange) : array
+function buildArrayForPrepareStmt(array $criteria) : array
 {
-    $array = [];
-    if ($userId) {
-        $array[] = $userId;
+    $prepareData = [];
+    foreach ($criteria as $expresseion) {
+        $prepareData[] = $expresseion['value'];
     }
-    if ($projectId) {
-        $array[] = $projectId;
-    }
-    if ($showCompleted === 0) {
-        $array[] = $showCompleted;
-    }
-    switch ($timeRange) {
-        case 'today' :
-            $array[] = date('Y-m-d');
-            break;
-        case 'tommorrow' :
-            $array[] = date('Y-m-d', strtotime('+1 day'));
-            break;
-        case 'expired' :
-            $array[] = date('Y-m-d', strtotime('-1 day'));
-            break;
-    }
-    return $array;
+    return $prepareData;
+
 }
