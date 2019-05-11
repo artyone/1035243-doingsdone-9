@@ -8,15 +8,15 @@
  * @return array|null ассоциативный массив с данными идентификатора, статуса, имени, адреса файла, даты окончания
  * задачи и идентификатора категории
  */
-function getTasks(mysqli $connection, int $userId, ?int $projectId) : array
+function getTasks(mysqli $connection, int $userId, ?int $projectId, ?int $showCompleted, ?string $timeRange) : ?array
 {
     $sqlQuery = "SELECT id, status, name, file_link, DATE_FORMAT(expiration_time, '%d.%m.%Y') as expiration_time, 
-       project_id FROM task WHERE user_id = ?" . (($projectId) ? "&& project_id = ?" : "");
+       project_id FROM task";
 
-    $array[0] = $userId;
-    if ($projectId) {
-        $array[1] = $projectId;
-    }
+    $criteria = buildCriteria($userId, $projectId, $showCompleted, $timeRange);
+    $sqlQuery = addCriteriaToQuery($sqlQuery, $criteria);
+
+    $array = buildArrayForPrepareStmt($userId, $projectId, $showCompleted, $timeRange);
 
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, $array);
     mysqli_stmt_execute($stmt);
@@ -50,3 +50,24 @@ function insertTask(mysqli $connection, array $taskData) : ?int
     return $resource;
 }
 
+function updateTask(mysqli $connection, int $taskId) : ?int
+{
+    $sqlQuery = "UPDATE task SET STATUS = IF(STATUS = 0, 1, 0) WHERE id = ?";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskId]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_insert_id($connection);
+    return $resource;
+}
+
+function getTaskById(mysqli $connection,  int $taskId, int $userId) : ?array
+{
+    $sqlQuery = "SELECT id FROM task WHERE id = ? && user_id = ?";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskId, $userId]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}

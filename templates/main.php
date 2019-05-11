@@ -8,15 +8,23 @@
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/" class="tasks-switch__item">Повестка дня</a>
-        <a href="/" class="tasks-switch__item">Завтра</a>
-        <a href="/" class="tasks-switch__item">Просроченные</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), null) ?>"
+           class="tasks-switch__item <?= (!getParam($_GET, 'timeRange')) ? 'tasks-switch__item--active' : '' ?> ">Все задачи</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'today') ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'today') ? 'tasks-switch__item--active' : '' ?>">Повестка дня</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'tommorrow') ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'tommorrow') ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
+        <a href="<?= buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), 'expired') ?>"
+           class="tasks-switch__item <?= (getParam($_GET, 'timeRange') == 'expired') ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">
-        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $showCompleteTasks ? 'checked' : '' ?> >
-        <span class="checkbox__text">Показывать выполненные</span>
+        <a href="<?= (!getParam($_GET, 'showCompleted') || getParam($_GET, 'showCompleted') === 0) ?
+            buildProjectUrl(getParam($_GET, 'projectId'), 1, getParam($_GET, 'timeRange')) :
+            buildProjectUrl(getParam($_GET, 'projectId'), 0, getParam($_GET, 'timeRange')) ?> ">
+            <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?= $showCompleteTasks ? 'checked' : '' ?> >
+            <span class="checkbox__text">Показывать выполненные</span></a>
+
     </label>
 </div>
 
@@ -28,8 +36,10 @@
             <?= isImportant($task['expiration_time'], $task['status']) ? 'task--important' : '' ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" <?= $task['status'] ? 'checked' : '' ?>>
-                        <span class="checkbox__text"><?= htmlspecialchars($task['name']); ?></span>
+                        <a href=" <?=  buildProjectUrl(getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'), $task['id']) ?>">
+                            <input class="checkbox__input visually-hidden" type="checkbox" <?= $task['status'] ? 'checked' : '' ?>>
+                            <span class="checkbox__text"><?= htmlspecialchars($task['name']); ?></span>
+                        </a>
                     </label>
                 </td>
                 <td class="task__file">

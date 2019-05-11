@@ -7,7 +7,7 @@
  * @param string|null $timeRange временной интервал показа задач
  * @return string возвращает строку для добавление в глобальный URL адрес страницы
  */
-function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $timeRange) : string
+function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $timeRange, ?int $taskId = null) : string
 {
     $urlData = [];
 
@@ -22,6 +22,9 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
     if ($timeRange) {
         $urlData['timeRange'] = $timeRange;
     }
+    if ($taskId) {
+        $urlData['taskId'] = $taskId;
+    }
 
     return '/?' . http_build_query($urlData);
 }
@@ -30,12 +33,16 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
  * Функция получения параметров из $_GET или $_POST
  * @param array $array массив $_GET или $_POST
  * @param string $key ключ для поиска в массиве
- * @param null $default значение по умолчанию, если не найден ключ
  * @return string|null возвращает значение ключа из массива
  */
-function getParam (array $array, string $key, $default = null) : ?string
+function getParam (array $array, string $key) : ?string
 {
-    return $array[$key] ?? $default;
+    if (isset($array[$key])) {
+        return htmlspecialchars($array[$key]);
+    } else {
+        return null;
+    }
+    //return $array[$key] ?? $default;
 }
 
 /**

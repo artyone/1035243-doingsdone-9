@@ -2,15 +2,20 @@
 
 require_once 'bootstrap.php';
 
-$showCompleteTasks = rand(0, 1);
+$showCompleteTasks = getParam($_GET, 'showCompleted');
 $connection = connection($config['dbWork']);
 
 $user = getUserFromSession();
 
+
 if ($user) {
+    if (getParam($_GET, 'taskId') && getTaskById($connection, getParam($_GET, 'taskId'), $user['id'])) {
+        updateTask($connection, getParam($_GET, 'taskId'));
+    }
+
     $title = 'Все проекты';
     $projects = getProjects($connection, $user['id']);
-    $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'));
+    $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'));
     $projectId = getParam($_GET, 'projectId');
 
     if ($projectId) {
