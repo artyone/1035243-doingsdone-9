@@ -52,7 +52,7 @@ $task = [
         'expected' => []
     ],
     [
-        'user_id' => 0,
+        'user_id' => 25,
         'project_id' => null,
         'showComplete' => 1,
         'timeRange' => null,

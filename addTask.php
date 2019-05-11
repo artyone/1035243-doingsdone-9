@@ -1,7 +1,7 @@
 <?php
 
 require_once 'bootstrap.php';
-const UPLOAD_DIR = __DIR__ . '/uploads/';
+
 $connection = connection($config['dbWork']);
 
 $user = getUserFromSession();

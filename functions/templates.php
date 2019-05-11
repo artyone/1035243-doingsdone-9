@@ -79,7 +79,7 @@ function addCriteriaToQuery(string $sqlQuery, array $criteria)
 {
     $result = [];
     foreach ($criteria as $expression) {
-        $result[] = $expression['field'] . $expression['sign'] . ' ?' ;
+        $result[] = $expression['field'] . $expression['sign'] . '?' ;
     }
     return $sqlQuery . ' WHERE ' . implode(' && ', $result);
 }
@@ -87,8 +87,8 @@ function addCriteriaToQuery(string $sqlQuery, array $criteria)
 function buildArrayForPrepareStmt(array $criteria) : array
 {
     $prepareData = [];
-    foreach ($criteria as $expresseion) {
-        $prepareData[] = $expresseion['value'];
+    foreach ($criteria as $expression) {
+        $prepareData[] = $expression['value'];
     }
     return $prepareData;
 
