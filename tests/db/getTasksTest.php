@@ -60,7 +60,6 @@ $task = [
     ]
 ];
 
-
 foreach ($task as $value) {
     $result = getTasks($connection, $value['user_id'], $value['project_id'], $value['showComplete'], $value['timeRange']);
     if ($result != $value['expected']) {

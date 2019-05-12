@@ -41,7 +41,7 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
 }
 
 /**
- * Функция получения проекта по имени пользователя для проверки дубля при добавлении нового проекта
+ * Функция получения проекта по имени и идентификатору пользователя для проверки дубля при добавлении нового проекта
  * @param mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
  * @param string $name имя проекта
@@ -60,6 +60,13 @@ function getProjectByName(mysqli $connection, int $userId, string $name) : array
     return $result;
 }
 
+
+/**
+ * Функция добавления нового проекта в базу данных
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $projectData массив с данными для добавления
+ * @return int|null возвращает идентификатор записаной строки в таблице.
+ */
 function insertProject(mysqli $connection, array $projectData) : ?int
 {
     $sqlQuery = "INSERT INTO project (name, user_id) VALUES (?,?)";

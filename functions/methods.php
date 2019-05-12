@@ -42,7 +42,6 @@ function getParam (array $array, string $key) : ?string
     } else {
         return null;
     }
-    //return $array[$key] ?? $default;
 }
 
 /**

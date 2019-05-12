@@ -22,6 +22,7 @@ if ($user) {
         $project = getProject($connection, $user['id'], $projectId);
         if (!$project) {
             http_response_code(404);
+            header("Location: pages/404.html");
             die;
         }
         $title = $project['name'];

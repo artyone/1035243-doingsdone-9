@@ -1,7 +1,7 @@
 <?php
 
 require_once 'bootstrap.php';
-const UPLOAD_DIR = __DIR__ . '/uploads/';
+
 $connection = connection($config['dbWork']);
 
 $user = getUserFromSession();
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = validateProjectForm($connection, $user['id'], $projectData);
 
     if (!$errors) {
-        $projectData['user_id'] = $user ['id'];
+        $projectData['user_id'] = $user['id'];
         if (insertProject($connection, $projectData)) {
             header('Location: ' . 'index.php');
             die();

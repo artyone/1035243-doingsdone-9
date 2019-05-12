@@ -25,6 +25,14 @@ function includeTemplate(string $name, array $data = []) : string
     return $result;
 }
 
+/**
+ * Функция создания массива "критерий" с данными по полю, по которому будет отбор, знаку отбора и значению
+ * @param int $userId идентификатор пользователя
+ * @param int|null $projectId идентификатор проекта
+ * @param int|null $showCompleted статус проекта
+ * @param string|null $timeRange условное обозначение временного интервала
+ * @return array возвращает ассоциативный массив с данными по критериям
+ */
 function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?string $timeRange) : array
 {
     $criteria = [];
@@ -75,7 +83,13 @@ function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?strin
     return $criteria;
 }
 
-function addCriteriaToQuery(string $sqlQuery, array $criteria)
+/**
+ * Функция создания строки для создания запроса в базу данных
+ * @param string $sqlQuery основной текст запроса
+ * @param array $criteria добавочные критерии для создания отбора в запросе
+ * @return string возвращает строку с текстом запроса в базу данных
+ */
+function addCriteriaToQuery(string $sqlQuery, array $criteria) : string
 {
     $result = [];
     foreach ($criteria as $expression) {
@@ -84,6 +98,11 @@ function addCriteriaToQuery(string $sqlQuery, array $criteria)
     return $sqlQuery . ' WHERE ' . implode(' && ', $result);
 }
 
+/**
+ * Функия создания массива для подготовленного выражения запроса в базу данных
+ * @param array $criteria массив критерий со значениями
+ * @return array возвращает готовый массив для передачи его в подготовленное выражение
+ */
 function buildArrayForPrepareStmt(array $criteria) : array
 {
     $prepareData = [];
@@ -91,5 +110,4 @@ function buildArrayForPrepareStmt(array $criteria) : array
         $prepareData[] = $expression['value'];
     }
     return $prepareData;
-
 }

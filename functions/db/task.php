@@ -1,10 +1,13 @@
 <?php
 
 /**
- * Функция получения задач для пользователя с отбором по идентификатору
- * @param int|mysqli $connection результат выполнения функции подключения к БД
+ * Функция получения задач для пользователя с отбором по идентификатору пользователя и проекта, по временному интервалу
+ * и статусу
+ * @param mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
- * @param int $projectId идентификатор проекта
+ * @param int|null $projectId идентификатор проекта
+ * @param int|null $showCompleted статус задачи
+ * @param string|null $timeRange строка с обозначением временного интервала
  * @return array|null ассоциативный массив с данными идентификатора, статуса, имени, адреса файла, даты окончания
  * задачи и идентификатора категории
  */
@@ -32,7 +35,7 @@ function getTasks(mysqli $connection, int $userId, ?int $projectId, ?int $showCo
  * Функция записи данных по задаче в базу данных подготовленным выражением
  * @param mysqli $connection результат выполнения функции подключения к БД
  * @param array $taskData массив данных для записи в таблицу task
- * @return int|null возвращает идентификатор записаной строки в таблице.
+ * @return int|null возвращает идентификатор записаной строки в таблице
  */
 function insertTask(mysqli $connection, array $taskData) : ?int
 {
@@ -50,6 +53,12 @@ function insertTask(mysqli $connection, array $taskData) : ?int
     return $resource;
 }
 
+/**
+ * Функция изменения статуса для выбранной задачи
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $taskId идентификатор задачи
+ * @return int|null возвращает идентификатор записаной строки в таблице
+ */
 function updateTask(mysqli $connection, int $taskId) : ?int
 {
     $sqlQuery = "UPDATE task SET STATUS = IF(STATUS = 0, 1, 0) WHERE id = ?";
@@ -59,7 +68,14 @@ function updateTask(mysqli $connection, int $taskId) : ?int
     return $resource;
 }
 
-function getTaskById(mysqli $connection,  int $taskId, int $userId) : ?array
+/**
+ * Функция получения задачи по идентификатору задачи и идентификатору пользователя
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $taskId идентификатор задачи
+ * @param int $userId идентификатор пользователя
+ * @return array|null возрвщает массив с задачей, если такая существует
+ */
+function getTaskById(mysqli $connection, int $taskId, int $userId) : ?array
 {
     $sqlQuery = "SELECT id FROM task WHERE id = ? && user_id = ?";
     $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$taskId, $userId]);
