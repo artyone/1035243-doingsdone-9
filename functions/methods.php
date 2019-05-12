@@ -5,6 +5,7 @@
  * @param string|null $projectId ID проекта
  * @param string|null $showCompleted переменная состояния показа выполненных
  * @param string|null $timeRange временной интервал показа задач
+ * @param int|null $taskId идентификатор задачи, которой потребуется изменить статус
  * @return string возвращает строку для добавление в глобальный URL адрес страницы
  */
 function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $timeRange, ?int $taskId = null) : string
