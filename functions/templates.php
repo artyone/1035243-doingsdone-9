@@ -76,7 +76,7 @@ function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?strin
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' < ',
-                'value' => date('Y-m-d', strtotime('-1 day'))
+                'value' => date('Y-m-d')
             ];
             break;
     }
