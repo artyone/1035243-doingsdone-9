@@ -15,7 +15,13 @@ if ($user) {
 
     $title = 'Все проекты';
     $projects = getProjects($connection, $user['id']);
-    $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'));
+
+    if (getParam($_GET, 'search')) {
+        $tasks = searchTasks($connection, $user['id'], getParam($_GET, 'search'));
+        $title = 'Результат поиска по запросу: ' . getParam($_GET, 'search');
+    } else {
+        $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'));
+    }
     $projectId = getParam($_GET, 'projectId');
 
     if ($projectId) {

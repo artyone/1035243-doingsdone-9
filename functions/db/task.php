@@ -87,3 +87,18 @@ function getTaskById(mysqli $connection, int $taskId, int $userId) : ?array
     }
     return $result;
 }
+
+function searchTasks(mysqli $connection, int $userId, string $searchQuery) : ?array
+{
+    $sqlQuery = "SELECT id, status, name, file_link, DATE_FORMAT(expiration_time, '%d.%m.%Y') as expiration_time, 
+       project_id FROM task WHERE user_id = ? && MATCH(NAME) AGAINST(? IN BOOLEAN MODE) ";
+
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userId, $searchQuery]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}

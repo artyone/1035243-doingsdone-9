@@ -38,7 +38,7 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
 function getParam (array $array, string $key) : ?string
 {
     if (isset($array[$key])) {
-        return htmlspecialchars($array[$key]);
+        return trim(htmlspecialchars($array[$key]));
     } else {
         return null;
     }

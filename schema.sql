@@ -36,7 +36,7 @@ CREATE TABLE task
     user_id         INT          NOT NULL,
     project_id      INT          NOT NULL,
     PRIMARY KEY (id),
-    INDEX (name),
+    FULLTEXT INDEX (name),
     INDEX (status)
 );
 
