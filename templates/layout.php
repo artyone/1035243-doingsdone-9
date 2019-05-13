@@ -15,7 +15,7 @@
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
-            <a href="../">
+            <a href="<?= buildProjectUrl(null, getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange')) ?>">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 

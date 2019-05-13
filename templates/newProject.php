@@ -4,7 +4,7 @@
           <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-            <input class="form__input" <?= array_key_exists('name', $errors) ? 'form__input--error' : '' ?>
+            <input class="form__input <?= array_key_exists('name', $errors) ? 'form__input--error' : '' ?>"
                    type="text" name="name" id="project_name" value="<?= empty($projectData['name']) ? '' : $projectData['name'] ?>"
                     placeholder="Введите название проекта">
               <p class="form__message"><?= array_key_exists('name', $errors) ? $errors['name'] : '' ?></p>

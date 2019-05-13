@@ -62,21 +62,21 @@ function buildCriteria(int $userId, ?int $projectId, ?int $showCompleted, ?strin
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' = ',
-                'value' => $timeRange
+                'value' => date('Y-m-d')
             ];
             break;
         case RANGE_TOMORROW :
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' = ',
-                'value' => $timeRange
+                'value' => date('Y-m-d', strtotime('+1 day'))
             ];
             break;
         case RANGE_EXPIRED :
             $criteria[] = [
                 'field' => 'expiration_time',
                 'sign' => ' < ',
-                'value' => $timeRange
+                'value' => date('Y-m-d')
             ];
             break;
     }
