@@ -12,23 +12,23 @@
     <div class="form__row">
         <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-        <select class="form__input form__input--select <?= array_key_exists('projectId', $errors) ? 'form__input--error' : '' ?>"
+        <select class="form__input form__input--select <?= array_key_exists('project_id', $errors) ? 'form__input--error' : '' ?>"
                 name="project_id" id="project">
             <?php foreach($projects as $project) : ?>
                 <option value="<?= $project['id'] ?>" <?= array_key_exists('projectId', $taskData) && $taskData['projectId'] == $project['id'] ? 'selected' : ''  ?>>
                     <?= $project['name'] ?></option>
             <?php endforeach ?>
         </select>
-        <p class="form__message"><?= array_key_exists('projectId', $errors) ? $errors['projectId'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('project_id', $errors) ? $errors['project_id'] : '' ?></p>
     </div>
 
     <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
 
-        <input class="form__input form__input--date <?= array_key_exists('expirationDate', $errors) ? 'form__input--error' : '' ?>"
+        <input class="form__input form__input--date <?= array_key_exists('expiration_date', $errors) ? 'form__input--error' : '' ?>"
                type="text" name="expiration_date" id="date" value="<?= empty($taskData['expirationDate']) ? '' : $taskData['expirationDate'] ?>"
                placeholder="Введите дату в формате ГГГГ-ММ-ДД">
-        <p class="form__message"><?= array_key_exists('expirationDate', $errors) ? $errors['expirationDate'] : '' ?></p>
+        <p class="form__message"><?= array_key_exists('expiration_date', $errors) ? $errors['expiration_date'] : '' ?></p>
     </div>
 
     <div class="form__row">

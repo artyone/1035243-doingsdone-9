@@ -10,7 +10,7 @@ if (!$user) {
     die();
 }
 
-$title = 'Дела в порядке - Добавление задачи';
+$title = 'Добавление задачи';
 $projects = getProjects($connection, $user['id']);
 
 $taskData = [];
