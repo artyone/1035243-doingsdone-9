@@ -19,6 +19,12 @@ require_once 'functions/user.php';
 require_once 'functions/validators/auth.php';
 require_once 'functions/validators/registration.php';
 require_once 'functions/validators/task.php';
+require_once 'functions/validators/project.php';
 require_once 'functions/validators/validators.php';
 
 $config = require_once 'config.php';
+
+const UPLOAD_DIR = __DIR__ . '/uploads/';
+const RANGE_TOMORROW = 'tomorrow';
+const RANGE_TODAY = 'today';
+const RANGE_EXPIRED = 'expired';

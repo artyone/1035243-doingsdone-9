@@ -25,7 +25,7 @@ function getProjects(mysqli $connection, int $userId) : array
  * @param mysqli $connection результат выполнения функции подключения к БД
  * @param int $userId уникатльный идентификатор пользователя
  * @param int $projectId идентификатор проекта
- * @return array массив с данными идентификатора и названия текущего проекта
+ * @return array массив с данными идентификаторов и названия текущего проекта
  */
 function getProject(mysqli $connection, int $userId, int $projectId) : array
 {
@@ -38,4 +38,40 @@ function getProject(mysqli $connection, int $userId, int $projectId) : array
         return [];
     }
     return $result;
+}
+
+/**
+ * Функция получения проекта по имени и идентификатору пользователя для проверки дубля при добавлении нового проекта
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $userId уникатльный идентификатор пользователя
+ * @param string $name имя проекта
+ * @return array массив с данными идентификаторов и названия текущего проекта
+ */
+function getProjectByName(mysqli $connection, int $userId, string $name) : array
+{
+    $sqlQuery = "SELECT id, name, user_id FROM project WHERE user_id = ? && name = ?";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$userId, $name]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_assoc($resource);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}
+
+
+/**
+ * Функция добавления нового проекта в базу данных
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param array $projectData массив с данными для добавления
+ * @return int|null возвращает идентификатор записаной строки в таблице.
+ */
+function insertProject(mysqli $connection, array $projectData) : ?int
+{
+    $sqlQuery = "INSERT INTO project (name, user_id) VALUES (?,?)";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, [$projectData['name'], $projectData['user_id']]);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_insert_id($connection);
+    return $resource;
 }
