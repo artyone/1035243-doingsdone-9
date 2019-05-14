@@ -41,7 +41,7 @@ $layoutContent = includeTemplate('layout.php',
         'projects' => $projects,
         'title' => $title,
         'user' => $user,
-        'projectIdFromGet' => $projectId,
+        'projectId' => $projectId,
         'showCompleted' => $showCompleted,
         'timeRange' => $timeRange
     ]
