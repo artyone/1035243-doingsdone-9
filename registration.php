@@ -14,7 +14,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $userData = formDataFilter($_POST);
+    $userData = getUserData($_POST);
     $errors = validateUserForm($connection, $userData);
 
     if (!$errors) {

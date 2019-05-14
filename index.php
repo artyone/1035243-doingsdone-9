@@ -2,21 +2,21 @@
 
 require_once 'bootstrap.php';
 
-$showCompleteTasks = getParam($_GET, 'showCompleted');
 $connection = connection($config['dbWork']);
 
 $user = getUserFromSession();
 
-
 if ($user) {
-    if (getParam($_GET, 'taskId') && getTaskById($connection, getParam($_GET, 'taskId'), $user['id'])) {
-        updateTask($connection, getParam($_GET, 'taskId'));
-    }
 
-    $title = 'Все проекты';
-    $projects = getProjects($connection, $user['id']);
-    $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'));
-    $projectId = getParam($_GET, 'projectId');
+    $projectId = getProjectId($_GET);
+    $showCompleted = getShowCompleted($_GET);
+    $timeRange = getTimeRange($_GET);
+    $search = getSearch($_GET);
+    $taskId = getTaskId($_GET);
+
+    if ($taskId && getTaskById($connection, $taskId, $user['id'])) {
+        updateTask($connection, $taskId);
+    }
 
     if ($projectId) {
         $project = getProject($connection, $user['id'], $projectId);
@@ -28,7 +28,24 @@ if ($user) {
         $title = $project['name'];
     }
 
-    $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
+    $title = 'Все проекты';
+    $projects = getProjects($connection, $user['id']);
+
+    if ($search) {
+        $tasks = searchTasks($connection, $user['id'], $search);
+        $title = 'Результат поиска по запросу: ' . $search;
+    } else {
+        $tasks = getTasks($connection, $user['id'], $projectId, $showCompleted, $timeRange);
+    }
+
+    $pageContent = includeTemplate('main.php',
+        [
+            'tasks' => $tasks,
+            'projectId' => $projectId,
+            'showCompleted' => $showCompleted,
+            'timeRange' => $timeRange,
+            'search' => $search
+        ]);
     $layoutContent = includeTemplate('layout.php',
         [
             'pageContent' => $pageContent,
@@ -36,7 +53,10 @@ if ($user) {
             'projects' => $projects,
             'title' => $title,
             'user' => $user,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'projectId' => $projectId,
+            'showCompleted' => $showCompleted,
+            'timeRange' => $timeRange
         ]
     );
 

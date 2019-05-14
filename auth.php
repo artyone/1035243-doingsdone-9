@@ -14,7 +14,7 @@ if ($user) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $authData = formDataFilter($_POST);
+    $authData = getAuthData($_POST);
     $errors = validateAuthForm($authData);
 
     if (!$errors) {

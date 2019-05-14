@@ -13,12 +13,16 @@ if (!$user) {
 $title = 'Добавление задачи';
 $projects = getProjects($connection, $user['id']);
 
+$projectId = getProjectId($_GET);
+$showCompleted = getShowCompleted($_GET);
+$timeRange = getTimeRange($_GET);
+
 $taskData = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $taskData = formDataFilter($_POST);
+    $taskData = getTaskData($_POST);
     $errors = validateTaskForm($connection, $taskData, $user['id']);
 
     if (!$errors) {
@@ -37,7 +41,10 @@ $layoutContent = includeTemplate('layout.php',
         'pageContent' => $pageContent,
         'projects' => $projects,
         'title' => $title,
-        'user' => $user
+        'user' => $user,
+        'projectId' => $projectId,
+        'showCompleted' => $showCompleted,
+        'timeRange' => $timeRange
     ]
 );
 

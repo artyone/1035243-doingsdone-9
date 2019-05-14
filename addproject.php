@@ -10,15 +10,19 @@ if (!$user) {
     die();
 }
 
-$title = 'Дела в порядке - Добавление проекта';
+$title = 'Добавление проекта';
 $projects = getProjects($connection, $user['id']);
+
+$projectId = getProjectId($_GET);
+$showCompleted = getShowCompleted($_GET);
+$timeRange = getTimeRange($_GET);
 
 $projectData = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $projectData = formDataFilter($_POST);
+    $projectData = getProjectData($_POST);
     $errors = validateProjectForm($connection, $user['id'], $projectData);
 
     if (!$errors) {
@@ -36,7 +40,10 @@ $layoutContent = includeTemplate('layout.php',
         'pageContent' => $pageContent,
         'projects' => $projects,
         'title' => $title,
-        'user' => $user
+        'user' => $user,
+        'projectId' => $projectId,
+        'showCompleted' => $showCompleted,
+        'timeRange' => $timeRange
     ]
 );
 

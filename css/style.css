@@ -771,3 +771,9 @@ a:focus {
 .welcome__text p {
   margin: 20px 0;
 }
+
+.link_task {
+  color: #000 !important;
+  text-decoration: none !important;
+
+}

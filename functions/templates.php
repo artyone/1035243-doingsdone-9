@@ -111,3 +111,9 @@ function buildArrayForPrepareStmt(array $criteria) : array
     }
     return $prepareData;
 }
+
+function badRequest()
+{
+    http_response_code(400);
+    die('Неверный запрос');
+}

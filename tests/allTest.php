@@ -11,7 +11,6 @@ require_once './db/getProjectsTest.php';
 require_once './db/getTasksTest.php';
 require_once './db/getUserByEmailTest.php';
 
-require_once './validators/formDataFilterTest.php';
 require_once './validators/isImportantTest.php';
 require_once './validators/validateAuthFormTest.php';
 require_once './validators/validateTaskFormTest.php';
