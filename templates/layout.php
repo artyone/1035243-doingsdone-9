@@ -15,7 +15,7 @@
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
-            <a href="<?= buildProjectUrl(null, getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange')) ?>">
+            <a href="<?= buildProjectUrl(null, $showCompletedFromGet, $timeRangeFromGet) ?>">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
@@ -41,9 +41,9 @@
 
                         <?php foreach ($projects as $project) : ?>
                             <li class="main-navigation__list-item
-                            <?= (getParam($_GET,'projectId') == $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
+                            <?= ($projectIdFromGet == $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
                                 <a class="main-navigation__list-item-link" href="
-                                <?= buildProjectUrl($project['id'], getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange')) ?>">
+                                <?= buildProjectUrl($project['id'], $showCompletedFromGet, $timeRangeFromGet) ?>">
                                     <?= htmlspecialchars($project['name']) ?></a>
                                 <span class="main-navigation__list-item-count">
                                     <?= $project['task_count'] ?></span>
@@ -54,7 +54,7 @@
                 </nav>
 
                 <a class="button button--transparent button--plus content__side-button"
-                   href="addProject.php" target="">Добавить проект</a>
+                   href="../addProject.php" target="">Добавить проект</a>
             </section>
 
             <main class="content__main">

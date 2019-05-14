@@ -2,30 +2,24 @@
 
 require_once 'bootstrap.php';
 
-$showCompleteTasks = getParam($_GET, 'showCompleted');
 $connection = connection($config['dbWork']);
 
 $user = getUserFromSession();
 
-
 if ($user) {
-    if (getParam($_GET, 'taskId') && getTaskById($connection, getParam($_GET, 'taskId'), $user['id'])) {
-        updateTask($connection, getParam($_GET, 'taskId'));
+
+    $projectIdFromGet = getProjectIdFromGet($_GET);
+    $showCompletedFromGet = getShowCompletedFromGet($_GET);
+    $timeRangeFromGet = getTimeRangeFromGet($_GET);
+    $searchFromGet = getSearchFromGet($_GET);
+    $taskIdFromGet = getTaskIdFromGet($_GET);
+
+    if ($taskIdFromGet && getTaskById($connection, $taskIdFromGet, $user['id'])) {
+        updateTask($connection, $taskIdFromGet);
     }
 
-    $title = 'Все проекты';
-    $projects = getProjects($connection, $user['id']);
-
-    if (getParam($_GET, 'search')) {
-        $tasks = searchTasks($connection, $user['id'], getParam($_GET, 'search'));
-        $title = 'Результат поиска по запросу: ' . getParam($_GET, 'search');
-    } else {
-        $tasks = getTasks($connection, $user['id'], getParam($_GET, 'projectId'), getParam($_GET, 'showCompleted'), getParam($_GET, 'timeRange'));
-    }
-    $projectId = getParam($_GET, 'projectId');
-
-    if ($projectId) {
-        $project = getProject($connection, $user['id'], $projectId);
+    if ($projectIdFromGet) {
+        $project = getProject($connection, $user['id'], $projectIdFromGet);
         if (!$project) {
             http_response_code(404);
             header("Location: pages/404.html");
@@ -34,7 +28,24 @@ if ($user) {
         $title = $project['name'];
     }
 
-    $pageContent = includeTemplate('main.php', ['tasks' => $tasks, 'showCompleteTasks' => $showCompleteTasks]);
+    $title = 'Все проекты';
+    $projects = getProjects($connection, $user['id']);
+
+    if ($searchFromGet) {
+        $tasks = searchTasks($connection, $user['id'], $searchFromGet);
+        $title = 'Результат поиска по запросу: ' . $searchFromGet;
+    } else {
+        $tasks = getTasks($connection, $user['id'], $projectIdFromGet, $showCompletedFromGet, $timeRangeFromGet);
+    }
+
+    $pageContent = includeTemplate('main.php',
+        [
+            'tasks' => $tasks,
+            'projectIdFromGet' => $projectIdFromGet,
+            'showCompletedFromGet' => $showCompletedFromGet,
+            'timeRangeFromGet' => $timeRangeFromGet,
+            'searchFromGet' => $searchFromGet
+        ]);
     $layoutContent = includeTemplate('layout.php',
         [
             'pageContent' => $pageContent,
@@ -42,7 +53,10 @@ if ($user) {
             'projects' => $projects,
             'title' => $title,
             'user' => $user,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'projectIdFromGet' => $projectIdFromGet,
+            'showCompletedFromGet' => $showCompletedFromGet,
+            'timeRangeFromGet' => $timeRangeFromGet
         ]
     );
 

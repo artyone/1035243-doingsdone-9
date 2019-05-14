@@ -13,11 +13,11 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
     $urlData = [];
 
     if ($projectId) {
-        $urlData['projectId'] = $projectId;
+        $urlData['projectId'] = (string)$projectId;
     }
 
     if ($showCompleted) {
-        $urlData['showCompleted'] = $showCompleted;
+        $urlData['showCompleted'] = (string)$showCompleted;
     }
 
     if ($timeRange) {
@@ -36,13 +36,10 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
  * @param string $key ключ для поиска в массиве
  * @return string|null возвращает значение ключа из массива
  */
-function getParam (array $array, string $key) : ?string
+function getParam(array $array, string $key) : ?string
 {
     if (!isset($array[$key])) {
         return null;
-    }
-    if ($key = 'projectId') {
-        return (int)$array[$key];
     }
     return htmlspecialchars(trim($array[$key]));
 }
@@ -121,4 +118,46 @@ function getAuthData(array $data) : array
     $projectData['email'] = htmlspecialchars(trim($data['email'])) ?? null;
     $projectData['password'] = htmlspecialchars(trim($data['password'])) ?? null;
     return $projectData;
+}
+
+function getProjectIdFromGet(array $dataFromGet) : ?int
+{
+    $projectIdFromGet = $dataFromGet['projectId'] ?? null;
+    if (!is_numeric($projectIdFromGet) && $projectIdFromGet !== null) {
+        badRequest();
+    }
+    return (int)$projectIdFromGet;
+}
+
+function getShowCompletedFromGet(array $dataFromGet) : ?int
+{
+    $ShowCompletedFromGet  = $dataFromGet['showCompleted'] ?? null;
+    if (!in_array($ShowCompletedFromGet, [0, 1]) && $ShowCompletedFromGet !== null) {
+        badRequest();
+    }
+    return (int)$ShowCompletedFromGet;
+}
+
+function getTimeRangeFromGet(array $dataFromGet) : ?string
+{
+    $timeRangeFromGet  = $dataFromGet['timeRange'] ?? null;
+    if (!in_array($timeRangeFromGet, ['today', 'tomorrow', 'expired']) && $timeRangeFromGet !== null) {
+        badRequest();
+    }
+    return trim(htmlspecialchars($timeRangeFromGet));
+}
+
+function getSearchFromGet(array $dataFromGet) : ?string
+{
+    $searchFromGet  = $dataFromGet['search'] ?? null;
+    return trim(htmlspecialchars($searchFromGet));
+}
+
+function getTaskIdFromGet(array $dataFromGet) : ?int
+{
+    $taskIdFromGet  = $dataFromGet['taskId'] ?? null;
+    if (!is_numeric($taskIdFromGet) && $taskIdFromGet !== null) {
+        badRequest();
+    }
+    return (int)$taskIdFromGet;
 }
