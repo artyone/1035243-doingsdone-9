@@ -8,18 +8,18 @@ $user = getUserFromSession();
 
 if ($user) {
 
-    $projectIdFromGet = getProjectIdFromGet($_GET);
-    $showCompletedFromGet = getShowCompletedFromGet($_GET);
-    $timeRangeFromGet = getTimeRangeFromGet($_GET);
-    $searchFromGet = getSearchFromGet($_GET);
-    $taskIdFromGet = getTaskIdFromGet($_GET);
+    $projectId = getProjectId($_GET);
+    $showCompleted = getShowCompleted($_GET);
+    $timeRange = getTimeRange($_GET);
+    $search = getSearch($_GET);
+    $taskId = getTaskId($_GET);
 
-    if ($taskIdFromGet && getTaskById($connection, $taskIdFromGet, $user['id'])) {
-        updateTask($connection, $taskIdFromGet);
+    if ($taskId && getTaskById($connection, $taskId, $user['id'])) {
+        updateTask($connection, $taskId);
     }
 
-    if ($projectIdFromGet) {
-        $project = getProject($connection, $user['id'], $projectIdFromGet);
+    if ($projectId) {
+        $project = getProject($connection, $user['id'], $projectId);
         if (!$project) {
             http_response_code(404);
             header("Location: pages/404.html");
@@ -31,20 +31,20 @@ if ($user) {
     $title = 'Все проекты';
     $projects = getProjects($connection, $user['id']);
 
-    if ($searchFromGet) {
-        $tasks = searchTasks($connection, $user['id'], $searchFromGet);
-        $title = 'Результат поиска по запросу: ' . $searchFromGet;
+    if ($search) {
+        $tasks = searchTasks($connection, $user['id'], $search);
+        $title = 'Результат поиска по запросу: ' . $search;
     } else {
-        $tasks = getTasks($connection, $user['id'], $projectIdFromGet, $showCompletedFromGet, $timeRangeFromGet);
+        $tasks = getTasks($connection, $user['id'], $projectId, $showCompleted, $timeRange);
     }
 
     $pageContent = includeTemplate('main.php',
         [
             'tasks' => $tasks,
-            'projectIdFromGet' => $projectIdFromGet,
-            'showCompletedFromGet' => $showCompletedFromGet,
-            'timeRangeFromGet' => $timeRangeFromGet,
-            'searchFromGet' => $searchFromGet
+            'projectId' => $projectId,
+            'showCompleted' => $showCompleted,
+            'timeRange' => $timeRange,
+            'search' => $search
         ]);
     $layoutContent = includeTemplate('layout.php',
         [
@@ -54,9 +54,9 @@ if ($user) {
             'title' => $title,
             'user' => $user,
             'tasks' => $tasks,
-            'projectIdFromGet' => $projectIdFromGet,
-            'showCompletedFromGet' => $showCompletedFromGet,
-            'timeRangeFromGet' => $timeRangeFromGet
+            'projectId' => $projectId,
+            'showCompleted' => $showCompleted,
+            'timeRange' => $timeRange
         ]
     );
 

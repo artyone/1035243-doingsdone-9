@@ -13,9 +13,9 @@ if (!$user) {
 $title = 'Добавление проекта';
 $projects = getProjects($connection, $user['id']);
 
-$projectIdFromGet = getProjectIdFromGet($_GET);
-$showCompletedFromGet = getShowCompletedFromGet($_GET);
-$timeRangeFromGet = getTimeRangeFromGet($_GET);
+$projectId = getProjectId($_GET);
+$showCompleted = getShowCompleted($_GET);
+$timeRange = getTimeRange($_GET);
 
 $projectData = [];
 $errors = [];
@@ -41,9 +41,9 @@ $layoutContent = includeTemplate('layout.php',
         'projects' => $projects,
         'title' => $title,
         'user' => $user,
-        'projectIdFromGet' => $projectIdFromGet,
-        'showCompletedFromGet' => $showCompletedFromGet,
-        'timeRangeFromGet' => $timeRangeFromGet
+        'projectIdFromGet' => $projectId,
+        'showCompleted' => $showCompleted,
+        'timeRange' => $timeRange
     ]
 );
 

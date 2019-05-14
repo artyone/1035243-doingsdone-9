@@ -15,7 +15,7 @@
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
-            <a href="<?= buildProjectUrl(null, $showCompletedFromGet, $timeRangeFromGet) ?>">
+            <a href="<?= buildProjectUrl(null, $showCompleted, $timeRange) ?>">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
@@ -41,9 +41,9 @@
 
                         <?php foreach ($projects as $project) : ?>
                             <li class="main-navigation__list-item
-                            <?= ($projectIdFromGet == $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
+                            <?= ($projectId == $project['id']) ? 'main-navigation__list-item--active' : '' ?> ">
                                 <a class="main-navigation__list-item-link" href="
-                                <?= buildProjectUrl($project['id'], $showCompletedFromGet, $timeRangeFromGet) ?>">
+                                <?= buildProjectUrl($project['id'], $showCompleted, $timeRange) ?>">
                                     <?= htmlspecialchars($project['name']) ?></a>
                                 <span class="main-navigation__list-item-count">
                                     <?= $project['task_count'] ?></span>

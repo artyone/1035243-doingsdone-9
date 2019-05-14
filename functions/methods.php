@@ -8,7 +8,7 @@
  * @param int|null $taskId идентификатор задачи, которой потребуется изменить статус
  * @return string возвращает строку для добавление в глобальный URL адрес страницы
  */
-function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $timeRange, ?int $taskId = null) : string
+function buildProjectUrl(?int $projectId, ?int $showCompleted, ?string $timeRange, ?int $taskId = null) : string
 {
     $urlData = [];
 
@@ -120,44 +120,69 @@ function getAuthData(array $data) : array
     return $projectData;
 }
 
-function getProjectIdFromGet(array $dataFromGet) : ?int
+/**
+ * Функция получения идентификатора проекта из $_GET
+ * @param array $data массив данных из $_GET
+ * @return int|null возвращает значение проекта
+ */
+function getProjectId(array $data) : ?int
 {
-    $projectIdFromGet = $dataFromGet['projectId'] ?? null;
-    if (!is_numeric($projectIdFromGet) && $projectIdFromGet !== null) {
+    $projectId = $data['projectId'] ?? null;
+    if (!is_numeric($projectId) && $projectId !== null) {
         badRequest();
     }
-    return (int)$projectIdFromGet;
+    return (int)$projectId;
 }
 
-function getShowCompletedFromGet(array $dataFromGet) : ?int
+/**
+ * Функция значения фильтра выполненных задач из $_GET
+ * @param array $data массив данных из $_GET
+ * @return int|null возвращает значение фильтра
+ */
+function getShowCompleted(array $data) : ?int
 {
-    $ShowCompletedFromGet  = $dataFromGet['showCompleted'] ?? null;
-    if (!in_array($ShowCompletedFromGet, [0, 1]) && $ShowCompletedFromGet !== null) {
+    $showCompleted  = $data['showCompleted'] ?? null;
+    if (!in_array($showCompleted, [0, 1]) && $showCompleted !== null) {
         badRequest();
     }
-    return (int)$ShowCompletedFromGet;
+    return (int)$showCompleted;
 }
 
-function getTimeRangeFromGet(array $dataFromGet) : ?string
+/**
+ * Функция получения фильтра по времени из $_GET
+ * @param array $data массив данных из $_GET
+ * @return string|null возвращает значение фильтра
+ */
+function getTimeRange(array $data) : ?string
 {
-    $timeRangeFromGet  = $dataFromGet['timeRange'] ?? null;
-    if (!in_array($timeRangeFromGet, ['today', 'tomorrow', 'expired']) && $timeRangeFromGet !== null) {
+    $timeRange  = $data['timeRange'] ?? null;
+    if (!in_array($timeRange, ['today', 'tomorrow', 'expired']) && $timeRange !== null) {
         badRequest();
     }
-    return trim(htmlspecialchars($timeRangeFromGet));
+    return trim(htmlspecialchars($timeRange));
 }
 
-function getSearchFromGet(array $dataFromGet) : ?string
+/**
+ * Функция получения строки для поиска из $_GET
+ * @param array $data массив данных из $_GET
+ * @return string|null возвращает строку поиска
+ */
+function getSearch(array $data) : ?string
 {
-    $searchFromGet  = $dataFromGet['search'] ?? null;
-    return trim(htmlspecialchars($searchFromGet));
+    $search  = $data['search'] ?? null;
+    return trim(htmlspecialchars($search));
 }
 
-function getTaskIdFromGet(array $dataFromGet) : ?int
+/**
+ * Функция получения идентификатора задачи для изменения её статуса из $_GET
+ * @param array $data массив данных из $_GET
+ * @return int|null возвращает идентификатор задачи
+ */
+function getTaskId(array $data) : ?int
 {
-    $taskIdFromGet  = $dataFromGet['taskId'] ?? null;
-    if (!is_numeric($taskIdFromGet) && $taskIdFromGet !== null) {
+    $taskId  = $data['taskId'] ?? null;
+    if (!is_numeric($taskId) && $taskId !== null) {
         badRequest();
     }
-    return (int)$taskIdFromGet;
+    return (int)$taskId;
 }
