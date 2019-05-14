@@ -36,13 +36,13 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
  * @param string $key ключ для поиска в массиве
  * @return string|null возвращает значение ключа из массива
  */
-function getParam(array $array, string $key) : ?string
+/*function getParam(array $array, string $key) : ?string
 {
     if (!isset($array[$key])) {
         return null;
     }
     return htmlspecialchars(trim($array[$key]));
-}
+}*/
 
 /**
  * Функция записи файла на сервер и получение ссылки на него с переименованием и проверкой корректности загрузки
