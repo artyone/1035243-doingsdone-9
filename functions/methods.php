@@ -41,8 +41,10 @@ function getParam (array $array, string $key) : ?string
     if (!isset($array[$key])) {
         return null;
     }
-    $result = htmlspecialchars(trim($array[$key]));
-    return $result;
+    if ($key = 'projectId') {
+        return (int)$array[$key];
+    }
+    return htmlspecialchars(trim($array[$key]));
 }
 
 /**
