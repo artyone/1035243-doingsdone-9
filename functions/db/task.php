@@ -88,6 +88,13 @@ function getTaskById(mysqli $connection, int $taskId, int $userId) : ?array
     return $result;
 }
 
+/**
+ * Функция для поиска заданий в базе данных по полю имени задачи и по идентификатору пользователя
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @param int $userId идентификатор пользователя
+ * @param string $searchQuery строка для поиска по полю имени задачи
+ * @return array|null возвращает массив, содержащий найденные задачи
+ */
 function searchTasks(mysqli $connection, int $userId, string $searchQuery) : ?array
 {
     $sqlQuery = "SELECT id, status, name, file_link, DATE_FORMAT(expiration_time, '%d.%m.%Y') as expiration_time, 
