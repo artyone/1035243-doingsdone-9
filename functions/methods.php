@@ -38,11 +38,11 @@ function buildProjectUrl(?string $projectId, ?string $showCompleted, ?string $ti
  */
 function getParam (array $array, string $key) : ?string
 {
-    if (isset($array[$key])) {
-        return trim(htmlspecialchars($array[$key]));
-    } else {
+    if (!isset($array[$key])) {
         return null;
     }
+    $result = htmlspecialchars(trim($array[$key]));
+    return $result;
 }
 
 /**
@@ -70,4 +70,53 @@ function uploadFile(array $file, string $dir) : ?string
     }
 
     return $fileLink;
+}
+
+/**
+ * Функция получения данных из $_GET для создания задачи
+ * @param array $data массив данных для преобразования
+ * @return array возвращает массив преоборазованных данных
+ */
+function getTaskData(array $data) : array
+{
+    $taskData['name'] = htmlspecialchars(trim($data['name'])) ?? null;
+    $taskData['project_id'] = (int)($data['project_id']) ?? null;
+    $taskData['expiration_date'] = htmlspecialchars(trim($data['expiration_date'])) ?? null;
+    return $taskData;
+}
+
+/**
+ * Функция получения данных из $_GET для создания пользователя
+ * @param array $data массив данных для преобразования
+ * @return array возвращает массив преоборазованных данных
+ */
+function getUserData(array $data) : array
+{
+    $userData['email'] = htmlspecialchars(trim($data['email'])) ?? null;
+    $userData['password'] = htmlspecialchars(trim($data['password'])) ?? null;
+    $userData['name'] = htmlspecialchars(trim($data['name'])) ?? null;
+    return $userData;
+}
+
+/**
+ * Функция получения данных из $_GET для создания проекта
+ * @param array $data массив данных для преобразования
+ * @return array возвращает массив преоборазованных данных
+ */
+function getProjectData(array $data) : array
+{
+    $projectData['name'] = htmlspecialchars(trim($data['name'])) ?? null;
+    return $projectData;
+}
+
+/**
+ * Функция получения данных из $_GET для аутентификации пользователя
+ * @param array $data массив данных для преобразования
+ * @return array возвращает массив преоборазованных данных
+ */
+function getAuthData(array $data) : array
+{
+    $projectData['email'] = htmlspecialchars(trim($data['email'])) ?? null;
+    $projectData['password'] = htmlspecialchars(trim($data['password'])) ?? null;
+    return $projectData;
 }

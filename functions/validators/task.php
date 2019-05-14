@@ -12,7 +12,7 @@ function validateTaskForm(mysqli $connection, array $taskData, int $userId) : ar
     if ($error = validateTaskName($taskData['name'])) {
         $errors['name'] = $error;
     }
-    if ($error = validateTaskProject($connection, $userId, $taskData['project_id'])) {
+    if ($error = validateTaskProject($connection, $userId, (int)($taskData['project_id']))) {
         $errors['project_id'] = $error;
     }
     if ($error = validateTaskDate($taskData['expiration_date'])) {
@@ -46,7 +46,7 @@ function validateTaskName(string $name) : ?string
  */
 function validateTaskProject(mysqli $connection, int $userId, ?int $projectId) : ?string
 {
-    if (empty($projectId)) {
+    if (!($projectId)) {
         return 'Заполните поле проекта';
     } elseif (!getProject($connection, $userId, $projectId)) {
         return 'Выберите существующий проект';

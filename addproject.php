@@ -10,7 +10,7 @@ if (!$user) {
     die();
 }
 
-$title = 'Дела в порядке - Добавление проекта';
+$title = 'Добавление проекта';
 $projects = getProjects($connection, $user['id']);
 
 $projectData = [];
@@ -18,7 +18,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $projectData = formDataFilter($_POST);
+    $projectData = getProjectData($_POST);
     $errors = validateProjectForm($connection, $user['id'], $projectData);
 
     if (!$errors) {

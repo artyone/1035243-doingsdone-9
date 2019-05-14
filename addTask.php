@@ -18,7 +18,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $taskData = formDataFilter($_POST);
+    $taskData = getTaskData($_POST);
     $errors = validateTaskForm($connection, $taskData, $user['id']);
 
     if (!$errors) {

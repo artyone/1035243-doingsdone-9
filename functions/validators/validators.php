@@ -43,20 +43,3 @@ function is_date_valid(string $date) : bool
     return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
 }
 
-/**
- * Функция преобразования символов и удаления пробелов
- * @param array $data массив данных (из $_POST) требующий преобразований
- * @return array массив без пробелов в начале и конце строк с преобразованными символами
- */
-function formDataFilter(array $data) : array
-{
-    $resultData = [];
-    foreach ($data as $key => $value) {
-        $resultData[$key] = trim($value);
-        $resultData[$key] = htmlspecialchars($resultData[$key]);
-    }
-    return $resultData;
-}
-
-
-
