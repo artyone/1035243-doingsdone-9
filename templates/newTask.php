@@ -14,6 +14,7 @@
 
         <select class="form__input form__input--select <?= array_key_exists('project_id', $errors) ? 'form__input--error' : '' ?>"
                 name="project_id" id="project">
+            <option value="">Выберите проект</option>
             <?php foreach($projects as $project) : ?>
                 <option value="<?= $project['id'] ?>" <?= array_key_exists('project_id', $taskData) && $taskData['project_id'] == $project['id'] ? 'selected' : ''  ?>>
                     <?= $project['name'] ?></option>
