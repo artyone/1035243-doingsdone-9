@@ -36,3 +36,20 @@ function insertUser(mysqli $connection, array $userData) : ?int
     return $resource;
 }
 
+/**
+ * Функция получения списка всех пользователей
+ * @param mysqli $connection результат выполнения функции подключения к БД
+ * @return array возвращает массив с данными по всем пользователям
+ */
+function getUsers(mysqli $connection) : array
+{
+    $sqlQuery = "SELECT id, email, password, name FROM user";
+    $stmt = db_get_prepare_stmt($connection, $sqlQuery, []);
+    mysqli_stmt_execute($stmt);
+    $resource = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    if (!$result) {
+        return [];
+    }
+    return $result;
+}

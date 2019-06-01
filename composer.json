@@ -2,6 +2,7 @@
     "require": {
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "*",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "swiftmailer/swiftmailer": "^6.2"
     }
 }
