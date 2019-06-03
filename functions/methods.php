@@ -2,8 +2,8 @@
 
 /**
  * Функция создания URL адреса для строки запроса
- * @param string|null $projectId ID проекта
- * @param string|null $showCompleted переменная состояния показа выполненных
+ * @param int|null $projectId ID проекта
+ * @param int|null $showCompleted переменная состояния показа выполненных
  * @param string|null $timeRange временной интервал показа задач
  * @param int|null $taskId идентификатор задачи, которой потребуется изменить статус
  * @return string возвращает строку для добавление в глобальный URL адрес страницы
@@ -29,20 +29,6 @@ function buildProjectUrl(?int $projectId, ?int $showCompleted, ?string $timeRang
 
     return '/?' . http_build_query($urlData);
 }
-
-/**
- * Функция получения параметров из $_GET или $_POST
- * @param array $array массив $_GET или $_POST
- * @param string $key ключ для поиска в массиве
- * @return string|null возвращает значение ключа из массива
- */
-/*function getParam(array $array, string $key) : ?string
-{
-    if (!isset($array[$key])) {
-        return null;
-    }
-    return htmlspecialchars(trim($array[$key]));
-}*/
 
 /**
  * Функция записи файла на сервер и получение ссылки на него с переименованием и проверкой корректности загрузки
