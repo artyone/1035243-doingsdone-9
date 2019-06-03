@@ -11,11 +11,11 @@
         <a href="<?= buildProjectUrl($projectId, $showCompleted, null) ?>"
            class="tasks-switch__item <?= !$timeRange ? 'tasks-switch__item--active' : '' ?> ">Все задачи</a>
         <a href="<?= buildProjectUrl($projectId, $showCompleted, RANGE_TODAY) ?>"
-           class="tasks-switch__item <?= ($timeRange == RANGE_TODAY) ? 'tasks-switch__item--active' : '' ?>">Повестка дня</a>
+           class="tasks-switch__item <?= ($timeRange === RANGE_TODAY) ? 'tasks-switch__item--active' : '' ?>">Повестка дня</a>
         <a href="<?= buildProjectUrl($projectId, $showCompleted, RANGE_TOMORROW) ?>"
-           class="tasks-switch__item <?= ($timeRange == RANGE_TOMORROW) ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
+           class="tasks-switch__item <?= ($timeRange === RANGE_TOMORROW) ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
         <a href="<?= buildProjectUrl($projectId, $showCompleted, RANGE_EXPIRED) ?>"
-           class="tasks-switch__item <?= ($timeRange == RANGE_EXPIRED) ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
+           class="tasks-switch__item <?= ($timeRange === RANGE_EXPIRED) ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">

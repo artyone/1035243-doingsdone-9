@@ -16,7 +16,7 @@
                 name="project_id" id="project">
             <option value="">Выберите проект</option>
             <?php foreach($projects as $project) : ?>
-                <option value="<?= $project['id'] ?>" <?= array_key_exists('project_id', $taskData) && $taskData['project_id'] == $project['id'] ? 'selected' : ''  ?>>
+                <option value="<?= $project['id'] ?>" <?= array_key_exists('project_id', $taskData) && $taskData['project_id'] === $project['id'] ? 'selected' : ''  ?>>
                     <?= $project['name'] ?></option>
             <?php endforeach ?>
         </select>
